@@ -59,6 +59,9 @@ public class OtherZatratyViewRowImpl extends ViewRowImpl {
         ActivitiesId,
         Objname,
         Enbl,
+        OparationId,
+        KontragId,
+        KontragName,
         TotalZatr,
         OtherZatratyTabPartZatratyView,
         VwOtherMoves,
@@ -68,7 +71,9 @@ public class OtherZatratyViewRowImpl extends ViewRowImpl {
         CurrencyView1,
         KassaVO1,
         TypeOfActivitiesView1,
-        KassaSettingsView1;
+        KassaSettingsView1,
+        OperationOtherView1,
+        KontragOtherView1;
         static AttributesEnum[] vals = null;
         ;
         private static final int firstIndex = 0;
@@ -109,6 +114,9 @@ public class OtherZatratyViewRowImpl extends ViewRowImpl {
     public static final int ACTIVITIESID = AttributesEnum.ActivitiesId.index();
     public static final int OBJNAME = AttributesEnum.Objname.index();
     public static final int ENBL = AttributesEnum.Enbl.index();
+    public static final int OPARATIONID = AttributesEnum.OparationId.index();
+    public static final int KONTRAGID = AttributesEnum.KontragId.index();
+    public static final int KONTRAGNAME = AttributesEnum.KontragName.index();
     public static final int TOTALZATR = AttributesEnum.TotalZatr.index();
     public static final int OTHERZATRATYTABPARTZATRATYVIEW = AttributesEnum.OtherZatratyTabPartZatratyView.index();
     public static final int VWOTHERMOVES = AttributesEnum.VwOtherMoves.index();
@@ -119,6 +127,8 @@ public class OtherZatratyViewRowImpl extends ViewRowImpl {
     public static final int KASSAVO1 = AttributesEnum.KassaVO1.index();
     public static final int TYPEOFACTIVITIESVIEW1 = AttributesEnum.TypeOfActivitiesView1.index();
     public static final int KASSASETTINGSVIEW1 = AttributesEnum.KassaSettingsView1.index();
+    public static final int OPERATIONOTHERVIEW1 = AttributesEnum.OperationOtherView1.index();
+    public static final int KONTRAGOTHERVIEW1 = AttributesEnum.KontragOtherView1.index();
 
     /**
      * This is the default constructor (do not remove).
@@ -335,6 +345,54 @@ public class OtherZatratyViewRowImpl extends ViewRowImpl {
     }
 
     /**
+     * Gets the attribute value for KONTRAG_ID using the alias name KontragId.
+     * @return the KONTRAG_ID
+     */
+    public String getKontragId() {
+        return (String) getAttributeInternal(KONTRAGID);
+    }
+
+    /**
+     * Sets <code>value</code> as attribute value for KONTRAG_ID using the alias name KontragId.
+     * @param value value to set the KONTRAG_ID
+     */
+    public void setKontragId(String value) {
+        setAttributeInternal(KONTRAGID, value);
+    }
+
+    /**
+     * Gets the attribute value for the calculated attribute KontragName.
+     * @return the KontragName
+     */
+    public String getKontragName() {
+        return (String) getAttributeInternal(KONTRAGNAME);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for the calculated attribute KontragName.
+     * @param value value to set the  KontragName
+     */
+    public void setKontragName(String value) {
+        setAttributeInternal(KONTRAGNAME, value);
+    }
+
+    /**
+     * Gets the attribute value for OPARATION_ID using the alias name OparationId.
+     * @return the OPARATION_ID
+     */
+    public String getOparationId() {
+        return (String) getAttributeInternal(OPARATIONID);
+    }
+
+    /**
+     * Sets <code>value</code> as attribute value for OPARATION_ID using the alias name OparationId.
+     * @param value value to set the OPARATION_ID
+     */
+    public void setOparationId(String value) {
+        setAttributeInternal(OPARATIONID, value);
+    }
+
+    /**
      * Gets the attribute value for ACTIVITIES_ID using the alias name ActivitiesId.
      * @return the ACTIVITIES_ID
      */
@@ -427,6 +485,20 @@ public class OtherZatratyViewRowImpl extends ViewRowImpl {
      */
     public RowSet getKassaSettingsView1() {
         return (RowSet) getAttributeInternal(KASSASETTINGSVIEW1);
+    }
+
+    /**
+     * Gets the view accessor <code>RowSet</code> OperationOtherView1.
+     */
+    public RowSet getOperationOtherView1() {
+        return (RowSet) getAttributeInternal(OPERATIONOTHERVIEW1);
+    }
+
+    /**
+     * Gets the view accessor <code>RowSet</code> KontragOtherView1.
+     */
+    public RowSet getKontragOtherView1() {
+        return (RowSet) getAttributeInternal(KONTRAGOTHERVIEW1);
     }
 
 

@@ -4,7 +4,7 @@
 <AppModule
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="AppModule"
-  Version="12.1.2.66.68"
+  Version="12.1.3.10.8"
   InheritPersonalization="merge"
   ClearCacheOnRollback="true"
   ComponentClass="ua.divas.module.AppModuleImpl"
@@ -1030,6 +1030,12 @@
   <ViewUsage
     Name="InsideSettingsView1"
     ViewObjectName="ua.divas.view.InsideSettingsView"/>
+  <ViewUsage
+    Name="OperationOtherView1"
+    ViewObjectName="ua.divas.view.OperationOtherView"/>
+  <ViewUsage
+    Name="OtherZatratyView7"
+    ViewObjectName="ua.divas.view.OtherZatratyView"/>
   <ViewLinkUsage
     Name="CallLogFk1Link1"
     ViewLinkObjectName="ua.divas.view.CallLogFk1Link"
@@ -2151,6 +2157,12 @@
     ViewLinkObjectName="ua.divas.view.VwInsideDetailMoviesFkLink"
     SrcViewUsageName="ua.divas.module.AppModule.VwInsideDetail2"
     DstViewUsageName="ua.divas.module.AppModule.VwMovesInside1"
+    Reversed="false"/>
+  <ViewLinkUsage
+    Name="OperOtherFkLink1"
+    ViewLinkObjectName="ua.divas.view.OperOtherFkLink"
+    SrcViewUsageName="ua.divas.module.AppModule.OperationOtherView1"
+    DstViewUsageName="ua.divas.module.AppModule.OtherZatratyView7"
     Reversed="false"/>
   <ClientInterface
     Name="__clientInterface">

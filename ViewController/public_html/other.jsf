@@ -11,23 +11,39 @@
                         <af:panelAccordion id="pa1">
                             <af:showDetailItem text="Главная" id="sdi1" stretchChildren="first">
                                 <af:panelFormLayout id="pfl1">
-                                    <af:inputDate value="#{bindings.Dat.inputValue}" label="#{bindings.Dat.hints.label}"
-                                                  required="#{bindings.Dat.hints.mandatory}"
-                                                  columns="#{bindings.Dat.hints.displayWidth}"
-                                                  shortDesc="#{bindings.Dat.hints.tooltip}" id="id1"
-                                                  labelStyle="font-weight: bold;" autoSubmit="true"
-                                                  readOnly="#{bindings.OthEditable.inputValue == 1 ? false : true}">
-                                        <f:validator binding="#{bindings.Dat.validator}"/>
-                                        <af:convertDateTime pattern="#{bindings.Dat.format}"/>
-                                    </af:inputDate>
-                                    <af:inputText value="#{bindings.Num.inputValue}" label="#{bindings.Num.hints.label}"
-                                                  required="#{bindings.Num.hints.mandatory}"
-                                                  columns="#{bindings.Num.hints.displayWidth}"
-                                                  maximumLength="#{bindings.Num.hints.precision}"
-                                                  shortDesc="#{bindings.Num.hints.tooltip}" id="it1"
-                                                  labelStyle="font-weight: bold;" readOnly="true">
-                                        <f:validator binding="#{bindings.Num.validator}"/>
-                                    </af:inputText>
+                                    <af:panelLabelAndMessage label="#{bindings.Dat.hints.label}" id="plam4"
+                                                             labelStyle="font-weight: bold;">
+                                        <af:panelGroupLayout id="pgl6" layout="horizontal">
+                                            <af:inputDate value="#{bindings.Dat.inputValue}"
+                                                          required="#{bindings.Dat.hints.mandatory}"
+                                                          columns="#{bindings.Dat.hints.displayWidth}"
+                                                          shortDesc="#{bindings.Dat.hints.tooltip}" id="id1"
+                                                          labelStyle="font-weight: bold;" autoSubmit="true"
+                                                          readOnly="#{bindings.OthEditable.inputValue == 1 ? false : true}">
+                                                <f:validator binding="#{bindings.Dat.validator}"/>
+                                                <af:convertDateTime pattern="#{bindings.Dat.format}"/>
+                                            </af:inputDate>
+                                            <af:inputText value="#{bindings.Num.inputValue}"
+                                                          label="#{bindings.Num.hints.label}"
+                                                          required="#{bindings.Num.hints.mandatory}"
+                                                          columns="#{bindings.Num.hints.displayWidth}"
+                                                          maximumLength="#{bindings.Num.hints.precision}"
+                                                          shortDesc="#{bindings.Num.hints.tooltip}" id="it1"
+                                                          labelStyle="font-weight: bold;" readOnly="true">
+                                                <f:validator binding="#{bindings.Num.validator}"/>
+                                            </af:inputText>
+                                        </af:panelGroupLayout>
+                                    </af:panelLabelAndMessage>
+                                    <af:selectOneChoice value="#{bindings.OparationId.inputValue}"
+                                                        label="#{bindings.OparationId.label}"
+                                                        required="#{bindings.OparationId.hints.mandatory}"
+                                                        shortDesc="#{bindings.OparationId.hints.tooltip}" id="soc6"
+                                                        labelStyle="font-weight: bold;"
+                                                        readOnly="#{bindings.OthEditable.inputValue == 1 ? false : true}"
+                                                        autoSubmit="true">
+                                        <f:selectItems value="#{bindings.OparationId.items}" id="si6"/>
+                                        <f:validator binding="#{bindings.OparationId.validator}"/>
+                                    </af:selectOneChoice>
                                     <af:panelLabelAndMessage label="#{bindings.CurrId.label}" id="plam1"
                                                              labelStyle="font-weight: bold;">
                                         <af:panelGroupLayout id="pgl2" layout="horizontal">
@@ -44,12 +60,26 @@
                                                                 required="#{bindings.KassaId.hints.mandatory}"
                                                                 shortDesc="#{bindings.KassaId.hints.tooltip}" id="soc4"
                                                                 labelStyle="font-weight: bold;"
-                                                                readOnly="#{bindings.OthEditable.inputValue == 1 ? false : true}">
+                                                                readOnly="#{bindings.OthEditable.inputValue == 1 ? false : true}"
+                                                                visible="#{other_jsf.visibleKassa}">
                                                 <f:selectItems value="#{bindings.KassaId.items}" id="si4"/>
                                                 <f:validator binding="#{bindings.KassaId.validator}"/>
                                             </af:selectOneChoice>
                                         </af:panelGroupLayout>
                                     </af:panelLabelAndMessage>
+                                    <af:inputListOfValues id="kontragNameId"
+                                                          popupTitle="Search and Select: #{bindings.KontragName.hints.label}"
+                                                          value="#{bindings.KontragName.inputValue}"
+                                                          label="#{bindings.KontragName.hints.label}"
+                                                          model="#{bindings.KontragName.listOfValuesModel}"
+                                                          required="#{bindings.KontragName.hints.mandatory}"
+                                                          columns="#{bindings.KontragName.hints.displayWidth}"
+                                                          shortDesc="#{bindings.KontragName.hints.tooltip}"
+                                                          labelStyle="font-weight: bold;"
+                                                          readOnly="#{bindings.OthEditable.inputValue == 1 ? false : true}"
+                                                          visible="#{other_jsf.visibleKontrag}">
+                                        <f:validator binding="#{bindings.KontragName.validator}"/>
+                                    </af:inputListOfValues>
                                     <af:panelLabelAndMessage label="#{bindings.DivisionId.label}" id="plam2"
                                                              labelStyle="font-weight: bold;">
                                         <af:panelGroupLayout id="pgl3" layout="horizontal">
@@ -109,6 +139,16 @@
                                                               pattern="#{bindings.TotalZatr.format}"/>
                                         </af:outputFormatted>
                                     </af:panelLabelAndMessage>
+                                    <af:inputListOfValues id="kontragIdId"
+                                                          popupTitle="Search and Select: #{bindings.KontragId.hints.label}"
+                                                          value="#{bindings.KontragId.inputValue}"
+                                                          label="#{bindings.KontragId.hints.label}"
+                                                          model="#{bindings.KontragId.listOfValuesModel}"
+                                                          required="#{bindings.KontragId.hints.mandatory}"
+                                                          columns="#{bindings.KontragId.hints.displayWidth}"
+                                                          shortDesc="#{bindings.KontragId.hints.tooltip}">
+                                        <f:validator binding="#{bindings.KontragId.validator}"/>
+                                    </af:inputListOfValues>
                                 </af:panelFormLayout>
                                 <f:facet name="toolbar">
                                     <af:toolbar id="t5">

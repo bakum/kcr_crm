@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="OtherZatratyView"
-  Version="12.1.2.66.68"
+    Version="12.1.3.10.8"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
@@ -12,8 +12,7 @@
   RowClass="ua.divas.view.OtherZatratyViewRowImpl"
   ComponentClass="ua.divas.view.OtherZatratyViewImpl"
   ComponentInterface="ua.divas.view.common.OtherZatratyView"
-  ClientProxyName="ua.divas.view.client.OtherZatratyViewClient"
-    OrderBy="DAT DESC">
+  ClientProxyName="ua.divas.view.client.OtherZatratyViewClient">
     <DesignTime>
         <Attr Name="_isExpertMode" Value="true"/>
         <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
@@ -23,7 +22,8 @@
       Name="u_name"
       Kind="where"
       Type="java.lang.String">
-        <TransientExpression><![CDATA[viewObject.getSessionUser()]]></TransientExpression>
+        <TransientExpression
+            Name="expression"><![CDATA[viewObject.getSessionUser()]]></TransientExpression>
         <Properties>
             <SchemaBasedProperties>
                 <DISPLAYHINT
@@ -35,7 +35,8 @@
         Name="s_dat"
         Kind="viewcriteria"
         Type="java.sql.Timestamp">
-        <TransientExpression><![CDATA[viewObject.getDateLast()]]></TransientExpression>
+        <TransientExpression
+            Name="expression"><![CDATA[viewObject.getDateLast()]]></TransientExpression>
     </Variable>
     <ViewAccessor
       Name="DivisionsView1"
@@ -79,6 +80,14 @@
             </PIMap>
         </ParameterMap>
     </ViewAccessor>
+    <ViewAccessor
+        Name="OperationOtherView1"
+        ViewObjectName="ua.divas.view.OperationOtherView"
+        RowLevelBinds="true"/>
+    <ViewAccessor
+        Name="KontragOtherView1"
+        ViewObjectName="ua.divas.view.KontragOtherView"
+        RowLevelBinds="true"/>
     <ListBinding
       Name="LOV_DivisionId"
       ListVOName="DivisionsView1"
@@ -174,26 +183,97 @@
         </AttrArray>
         <DisplayCriteria/>
     </ListBinding>
-    <SQLQuery><![CDATA[SELECT OtherZatraty.ID, 
-       OtherZatraty.DAT, 
-       OtherZatraty.NUM, 
-       OtherZatraty.DELETED, 
-       OtherZatraty.POSTED, 
-       OtherZatraty.DIVISION_ID, 
-       OtherZatraty.USER_ID, 
-       OtherZatraty.COMMENTS, 
-       OtherZatraty.VERSION, 
-       OtherZatraty.CURR_ID, 
-       OtherZatraty.KASSA_ID,
-       (SELECT 
-        0 
-    FROM 
-        dual) oth_editable,
-        OtherZatraty.ACTIVITIES_ID,
-        'Прочие затраты' ObjName,
-        UTILITY.enable_edit(OtherZatraty.ID, 'other_zatraty') enbl
-FROM  OTHER_ZATRATY OtherZatraty
-where 
+    <ListBinding
+        Name="LOV_OparationId"
+        ListVOName="OperationOtherView1"
+        ListRangeSize="-1"
+        NullValueFlag="none"
+        MRUCount="0">
+        <AttrArray Name="AttrNames">
+            <Item Value="OparationId"/>
+        </AttrArray>
+        <AttrArray Name="AttrExpressions"/>
+        <AttrArray Name="ListAttrNames">
+            <Item Value="Id"/>
+        </AttrArray>
+        <AttrArray Name="ListDisplayAttrNames">
+            <Item Value="Fullname"/>
+        </AttrArray>
+        <DisplayCriteria/>
+    </ListBinding>
+    <ListBinding
+        Name="LOV_KontragId"
+        ListVOName="KontragOtherView1"
+        ListRangeSize="-1"
+        ComboRowCountHint="10"
+        NullValueFlag="none"
+        MRUCount="0">
+        <AttrArray Name="AttrNames">
+            <Item Value="KontragId"/>
+        </AttrArray>
+        <AttrArray Name="AttrExpressions"/>
+        <AttrArray Name="DerivedAttrNames">
+            <Item Value="KontragName"/>
+        </AttrArray>
+        <AttrArray Name="ListAttrNames">
+            <Item Value="Id"/>
+            <Item Value="Fullname"/>
+        </AttrArray>
+        <AttrArray Name="ListDisplayAttrNames">
+            <Item Value="Fullname"/>
+        </AttrArray>
+        <DisplayCriteria
+            Name="KontragOtherViewNoDelete"
+            Hint="showAndExecute"/>
+    </ListBinding>
+    <ListBinding
+        Name="LOV_KontragName"
+        ListVOName="KontragOtherView1"
+        ListRangeSize="-1"
+        ComboRowCountHint="10"
+        NullValueFlag="none"
+        MRUCount="0">
+        <AttrArray Name="AttrNames">
+            <Item Value="KontragName"/>
+        </AttrArray>
+        <AttrArray Name="AttrExpressions"/>
+        <AttrArray Name="DerivedAttrNames">
+            <Item Value="KontragId"/>
+        </AttrArray>
+        <AttrArray Name="ListAttrNames">
+            <Item Value="Fullname"/>
+            <Item Value="Id"/>
+        </AttrArray>
+        <AttrArray Name="ListDisplayAttrNames">
+            <Item Value="Fullname"/>
+        </AttrArray>
+        <DisplayCriteria
+            Name="KontragOtherViewNoDelete"
+            Hint="showAndExecute"/>
+    </ListBinding>
+    <SQLQuery><![CDATA[SELECT OtherZatraty.ID,       
+       OtherZatraty.DAT,       
+       OtherZatraty.NUM,       
+       OtherZatraty.DELETED,       
+       OtherZatraty.POSTED,       
+       OtherZatraty.DIVISION_ID,       
+       OtherZatraty.USER_ID,       
+       OtherZatraty.COMMENTS,       
+       OtherZatraty.VERSION,       
+       OtherZatraty.CURR_ID,       
+       OtherZatraty.KASSA_ID,      
+       (SELECT       
+        0       
+    FROM       
+        dual) oth_editable,      
+        OtherZatraty.ACTIVITIES_ID,      
+        'Прочие затраты' ObjName,      
+        UTILITY.enable_edit(OtherZatraty.ID, 'other_zatraty') enbl,      
+        OtherZatraty.OPARATION_ID,  
+        OtherZatraty.KONTRAG_ID, 
+        (select fullname from kontragents where id = OtherZatraty.KONTRAG_ID) Kontrag_Name 
+FROM  OTHER_ZATRATY OtherZatraty      
+where       
 upper(OtherZatraty.USER_ID) in (select upper(N) from table(cast(get_users(:u_name) as userTable)))]]></SQLQuery>
     <EntityUsage
       Name="OtherZatraty"
@@ -394,6 +474,68 @@ upper(OtherZatraty.USER_ID) in (select upper(N) from table(cast(get_users(:u_nam
         SQLType="NUMERIC"
         IsQueriable="false"/>
     <ViewAttribute
+        Name="OparationId"
+        IsNotNull="true"
+        PrecisionRule="true"
+        EntityAttrName="OparationId"
+        EntityUsage="OtherZatraty"
+        AliasName="OPARATION_ID"
+        LOVName="LOV_OparationId">
+        <TransientExpression
+            trustMode="untrusted"><![CDATA[viewObject.retrieveOperationId()]]></TransientExpression>
+        <Properties>
+            <SchemaBasedProperties>
+                <CONTROLTYPE
+                    Value="choice"/>
+            </SchemaBasedProperties>
+        </Properties>
+    </ViewAttribute>
+    <ViewAttribute
+        Name="KontragId"
+        PrecisionRule="true"
+        EntityAttrName="KontragId"
+        EntityUsage="OtherZatraty"
+        AliasName="KONTRAG_ID"
+        LOVName="LOV_KontragId">
+        <Properties>
+            <SchemaBasedProperties>
+                <CONTROLTYPE
+                    Value="input_text_lov"/>
+            </SchemaBasedProperties>
+        </Properties>
+        <Dependencies>
+            <Item
+                Value="KontragName"/>
+        </Dependencies>
+    </ViewAttribute>
+    <ViewAttribute
+        Name="KontragName"
+        IsPersistent="false"
+        PrecisionRule="true"
+        Precision="150"
+        Type="java.lang.String"
+        ColumnType="VARCHAR2"
+        AliasName="KONTRAG_NAME"
+        Expression="KONTRAG_NAME"
+        SQLType="VARCHAR"
+        LOVName="LOV_KontragName">
+        <DesignTime>
+            <Attr Name="_DisplaySize" Value="150"/>
+        </DesignTime>
+        <Properties>
+            <SchemaBasedProperties>
+                <LABEL
+                    ResId="ua.divas.view.OtherZatratyView.KontragName_LABEL"/>
+                <TOOLTIP
+                    ResId="ua.divas.view.OtherZatratyView.KontragName_TOOLTIP"/>
+                <CONTROLTYPE
+                    Value="input_text_lov"/>
+                <DISPLAYWIDTH
+                    Value="30"/>
+            </SchemaBasedProperties>
+        </Properties>
+    </ViewAttribute>
+    <ViewAttribute
       Name="TotalZatr"
       IsUpdateable="false"
       IsSelected="false"
@@ -404,8 +546,8 @@ upper(OtherZatraty.USER_ID) in (select upper(N) from table(cast(get_users(:u_nam
       AliasName="VIEW_ATTR"
       SQLType="NUMERIC"
       IsQueriable="false">
-        <RecalcCondition><![CDATA[true]]></RecalcCondition>
         <TransientExpression><![CDATA[OtherZatratyTabPartZatratyView.sum("Summa != null ? Summa : 0")]]></TransientExpression>
+        <RecalcCondition><![CDATA[true]]></RecalcCondition>
         <Properties>
             <SchemaBasedProperties>
                 <LABEL
@@ -450,7 +592,6 @@ upper(OtherZatraty.USER_ID) in (select upper(N) from table(cast(get_users(:u_nam
                 Operator="ONORAFTER"
                 Conjunction="AND"
                 Value=":s_dat"
-                GenerateIsNullClauseForBindVars="false"
                 IsBindVarValue="true"
                 Required="Optional"/>
         </ViewCriteriaRow>
@@ -491,6 +632,16 @@ upper(OtherZatraty.USER_ID) in (select upper(N) from table(cast(get_users(:u_nam
             <Parameter
               Name="_id"
               Type="java.lang.String"/>
+        </Method>
+        <Method
+            Name="getOperationName"
+            MethodName="getOperationName">
+            <Return
+                Name="_return_type_"
+                Type="java.lang.String"/>
+            <Parameter
+                Name="Id"
+                Type="java.lang.String"/>
         </Method>
     </ClientInterface>
     <ResourceBundle>

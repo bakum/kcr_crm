@@ -54,12 +54,15 @@ public class OtherZatratyImpl extends DivasEntity {
         CurrId,
         KassaId,
         ActivitiesId,
+        OparationId,
+        KontragId,
         Users,
         Kassa,
         Currency,
         Divisions,
         OtherZatratyTabPartZatraty,
-        TypeOfActivities;
+        TypeOfActivities,
+        OperationOther;
         private static AttributesEnum[] vals = null;
         private static final int firstIndex = 0;
 
@@ -96,12 +99,15 @@ public class OtherZatratyImpl extends DivasEntity {
     public static final int CURRID = AttributesEnum.CurrId.index();
     public static final int KASSAID = AttributesEnum.KassaId.index();
     public static final int ACTIVITIESID = AttributesEnum.ActivitiesId.index();
+    public static final int OPARATIONID = AttributesEnum.OparationId.index();
+    public static final int KONTRAGID = AttributesEnum.KontragId.index();
     public static final int USERS = AttributesEnum.Users.index();
     public static final int KASSA = AttributesEnum.Kassa.index();
     public static final int CURRENCY = AttributesEnum.Currency.index();
     public static final int DIVISIONS = AttributesEnum.Divisions.index();
     public static final int OTHERZATRATYTABPARTZATRATY = AttributesEnum.OtherZatratyTabPartZatraty.index();
     public static final int TYPEOFACTIVITIES = AttributesEnum.TypeOfActivities.index();
+    public static final int OPERATIONOTHER = AttributesEnum.OperationOther.index();
 
     /**
      * This is the default constructor (do not remove).
@@ -310,6 +316,38 @@ public class OtherZatratyImpl extends DivasEntity {
     }
 
     /**
+     * Gets the attribute value for OparationId, using the alias name OparationId.
+     * @return the value of OparationId
+     */
+    public String getOparationId() {
+        return (String) getAttributeInternal(OPARATIONID);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for OparationId.
+     * @param value value to set the OparationId
+     */
+    public void setOparationId(String value) {
+        setAttributeInternal(OPARATIONID, value);
+    }
+
+    /**
+     * Gets the attribute value for KontragId, using the alias name KontragId.
+     * @return the value of KontragId
+     */
+    public String getKontragId() {
+        return (String) getAttributeInternal(KONTRAGID);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for KontragId.
+     * @param value value to set the KontragId
+     */
+    public void setKontragId(String value) {
+        setAttributeInternal(KONTRAGID, value);
+    }
+
+    /**
      * @return the associated entity UsersImpl.
      */
     public UsersImpl getUsers() {
@@ -387,12 +425,47 @@ public class OtherZatratyImpl extends DivasEntity {
     }
 
     /**
+     * @return the associated entity oracle.jbo.server.EntityImpl.
+     */
+    public EntityImpl getOperationOther() {
+        return (EntityImpl) getAttributeInternal(OPERATIONOTHER);
+    }
+
+    /**
+     * Sets <code>value</code> as the associated entity oracle.jbo.server.EntityImpl.
+     */
+    public void setOperationOther(EntityImpl value) {
+        setAttributeInternal(OPERATIONOTHER, value);
+    }
+
+    /**
      * @param id key constituent
 
      * @return a Key object based on given key constituents.
      */
     public static Key createPrimaryKey(String id) {
         return new Key(new Object[] { id });
+    }
+    
+    private String getOperationName(String Id) {
+        String _id = (String) callStoredFunction(VARCHAR2, "OTHER_ENTRY.get_operationname(?)", new Object[] { Id });
+        if (_id.equals("none"))
+            return null;
+        else
+            return _id;
+    }
+
+    /**
+     * Validation method for OtherZatraty.
+     */
+    public boolean validateOtherZatraty() {
+        String konId = getKontragId();
+        String opId = getOparationId();
+        String opName = getOperationName(opId);
+        if (konId == null && !opName.equalsIgnoreCase("FROM_KASSA")) {
+            return false;
+        }
+        return true;
     }
 
 

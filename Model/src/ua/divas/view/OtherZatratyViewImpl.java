@@ -96,6 +96,27 @@ public class OtherZatratyViewImpl extends DivasView implements OtherZatratyView 
         return null;
     }
     
+    public String getOperationName(String Id) {
+        String _id = (String) callStoredFunction(VARCHAR2, "OTHER_ENTRY.get_operationname(?)", new Object[] { Id });
+        if (_id.equals("none"))
+            return null;
+        else
+            return _id;
+    }
+    
+    public String retrieveOperationId() {
+        ViewObjectImpl vo = (ViewObjectImpl) this.getRootApplicationModule().findViewObject("OperationOtherView1");
+        ViewRowSetImpl rs =
+            (ViewRowSetImpl) vo.findByViewCriteria(vo.getViewCriteria("OperationOtherKassa"), -1,
+                                                   vo.QUERY_MODE_SCAN_DATABASE_TABLES);
+        Row row = rs.first();
+        if (row != null) {
+            String rv = (String) row.getAttribute("Id");
+            return rv;
+        }
+        return null;
+    }
+    
     public void addEntry(String _id) {
         callStoredProcedure("OTHER_ENTRY.other_move_plan_acc(?)", new Object[] { _id });
     }

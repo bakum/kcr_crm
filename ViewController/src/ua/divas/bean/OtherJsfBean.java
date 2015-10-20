@@ -36,8 +36,53 @@ import ua.divas.module.AppModuleImpl;
 public class OtherJsfBean {
     private RichInputText zatrName;
     private RichPopup zatrPopup;
+    private boolean visibleKontrag;
+    private boolean visibleKassa;
 
     public OtherJsfBean() {
+    }
+    
+    public void setVisibleKontrag(boolean visibleKontrag) {
+        this.visibleKontrag = visibleKontrag;
+    }
+    
+    private OperationBinding getOperation(){
+        BindingContainer binding = BindingContext.getCurrent().getCurrentBindingsEntry();
+        return binding.getOperationBinding("getOperationName");
+    }
+    
+    public boolean getVisibleKontrag() {
+        OperationBinding ob = getOperation();
+        if (ob != null) {
+            //ob.getParamsMap().put("NomId", NomId);
+            String opName = (String) ob.execute();
+            System.out.println(opName);
+            if (!opName.equalsIgnoreCase("FROM_KASSA")) {
+                //if (!opName.equalsIgnoreCase("MOVE_KASSA")) {
+                    return true;
+                //}
+            }
+        }
+        //return visibleKontrag;
+        return false;
+    }
+
+    public void setVisibleKassa(boolean visibleKassa) {
+        this.visibleKassa = visibleKassa;
+    }
+
+    public boolean getVisibleKassa() {
+        OperationBinding ob = getOperation();
+        if (ob != null) {
+            //ob.getParamsMap().put("NomId", NomId);
+            String opName = (String) ob.execute();
+            System.out.println(opName);
+            if (opName.equalsIgnoreCase("FROM_KASSA")) {
+                return true;
+            }
+        }
+        //return visibleKassa;
+        return false;
     }
     
     public void resetBindingValue(String expression, Object newValue) {

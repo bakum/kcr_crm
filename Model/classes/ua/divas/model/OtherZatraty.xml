@@ -4,13 +4,14 @@
 <Entity
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="OtherZatraty"
-  Version="12.1.2.66.68"
+  Version="12.1.3.10.8"
   InheritPersonalization="merge"
   DBObjectType="table"
   DBObjectName="OTHER_ZATRATY"
   AliasName="OtherZatraty"
   BindingStyle="OracleName"
-  RowClass="ua.divas.model.OtherZatratyImpl">
+  RowClass="ua.divas.model.OtherZatratyImpl"
+  xmlns:validation="http://xmlns.oracle.com/adfm/validation">
   <DesignTime>
     <Attr Name="_codeGenFlag2" Value="Access"/>
     <Attr Name="_isCodegen" Value="true"/>
@@ -281,6 +282,47 @@
       </SchemaBasedProperties>
     </Properties>
   </Attribute>
+  <Attribute
+    Name="OparationId"
+    IsNotNull="true"
+    Precision="50"
+    ColumnName="OPARATION_ID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="OTHER_ZATRATY">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="ua.divas.model.OtherZatraty.OparationId_LABEL"/>
+        <TOOLTIP
+          ResId="ua.divas.model.OtherZatraty.OparationId_TOOLTIP"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="KontragId"
+    Precision="50"
+    ColumnName="KONTRAG_ID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="OTHER_ZATRATY">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="ua.divas.model.OtherZatraty.KontragId_LABEL"/>
+        <TOOLTIP
+          ResId="ua.divas.model.OtherZatraty.KontragId_TOOLTIP"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
   <AccessorAttribute
     Name="Users"
     Association="ua.divas.model.OtherZatratyFk2Assoc"
@@ -322,6 +364,13 @@
     AssociationEnd="ua.divas.model.OtherZatratyActivitiesFkAssoc.TypeOfActivities"
     AssociationOtherEnd="ua.divas.model.OtherZatratyActivitiesFkAssoc.OtherZatraty"
     Type="ua.divas.model.TypeOfActivitiesImpl"
+    IsUpdateable="true"/>
+  <AccessorAttribute
+    Name="OperationOther"
+    Association="ua.divas.model.OperOtherFkAssoc"
+    AssociationEnd="ua.divas.model.OperOtherFkAssoc.OperationOther"
+    AssociationOtherEnd="ua.divas.model.OperOtherFkAssoc.OtherZatraty"
+    Type="oracle.jbo.server.EntityImpl"
     IsUpdateable="true"/>
   <Key
     Name="OtherZatratyPk"
@@ -388,6 +437,21 @@
       <Item Value="ua.divas.model.OtherZatraty.ActivitiesId"/>
     </AttrArray>
   </Key>
+  <Key
+    Name="fk_OtherZatraty1">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="OPERATION_OTHER_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_OTHER_ZATRATY1"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="ua.divas.model.OtherZatraty.OparationId"/>
+    </AttrArray>
+  </Key>
+  <validation:MethodValidationBean
+    Name="OtherZatratyRule0"
+    ResId="ua.divas.model.OtherZatraty_Rule_0"
+    MethodName="validateOtherZatraty"/>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="ua.divas.model.ModelBundle"/>

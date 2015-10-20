@@ -4441,5 +4441,29 @@ public class AppModuleImpl extends ApplicationModuleImpl implements AppModule {
     public ViewObjectImpl getInsideSettingsView1() {
         return (ViewObjectImpl) findViewObject("InsideSettingsView1");
     }
+
+    /**
+     * Container's getter for OperationOtherView1.
+     * @return OperationOtherView1
+     */
+    public ViewObjectImpl getOperationOtherView1() {
+        return (ViewObjectImpl) findViewObject("OperationOtherView1");
+    }
+
+    /**
+     * Container's getter for OtherZatratyView7.
+     * @return OtherZatratyView7
+     */
+    public OtherZatratyViewImpl getOtherZatratyView7() {
+        return (OtherZatratyViewImpl) findViewObject("OtherZatratyView7");
+    }
+
+    /**
+     * Container's getter for OperOtherFkLink1.
+     * @return OperOtherFkLink1
+     */
+    public ViewLinkImpl getOperOtherFkLink1() {
+        return (ViewLinkImpl) findViewLink("OperOtherFkLink1");
+    }
 }
 

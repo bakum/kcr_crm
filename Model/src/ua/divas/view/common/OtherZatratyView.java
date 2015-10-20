@@ -9,5 +9,7 @@ public interface OtherZatratyView extends ViewObject {
     void addEntry(String _id);
 
     void removeEntry(String _id);
+
+    String getOperationName(String Id);
 }
 

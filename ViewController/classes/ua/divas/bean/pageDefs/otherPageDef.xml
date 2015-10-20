@@ -90,5 +90,15 @@
             Action="removeCurrentRow"/>
     <listOfValues Uses="LOV_Zatrname" StaticList="false" IterBinding="OtherZatratyTabPartZatratyView2Iterator"
                   id="Zatrname"/>
+    <list IterBinding="OtherZatratyView1Iterator" StaticList="false" Uses="LOV_OparationId" id="OparationId"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
+    <listOfValues IterBinding="OtherZatratyView1Iterator" StaticList="false" Uses="LOV_KontragId" id="KontragId"/>
+    <listOfValues IterBinding="OtherZatratyView1Iterator" StaticList="false" Uses="LOV_KontragName" id="KontragName"/>
+    <methodAction id="getOperationName" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getOperationName"
+                  IsViewObjectMethod="true" DataControl="AppModuleDataControl"
+                  InstanceName="data.AppModuleDataControl.OtherZatratyView1"
+                  ReturnName="data.AppModuleDataControl.methodResults.getOperationName_AppModuleDataControl_OtherZatratyView1_getOperationName_result">
+      <NamedData NDName="Id" NDValue="#{bindings.OparationId.inputValue}" NDType="java.lang.String"/>
+    </methodAction>
   </bindings>
 </pageDefinition>
