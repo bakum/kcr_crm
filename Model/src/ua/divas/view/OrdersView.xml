@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="OrdersView"
-  Version="12.1.2.66.68"
+    Version="12.1.3.10.8"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
@@ -27,7 +27,8 @@
       Name="u_name"
       Kind="where"
       Type="java.lang.String">
-        <TransientExpression><![CDATA[viewObject.getSessionUser()]]></TransientExpression>
+        <TransientExpression
+            Name="expression"><![CDATA[viewObject.getSessionUser()]]></TransientExpression>
         <Properties>
             <SchemaBasedProperties>
                 <DISPLAYHINT
@@ -821,7 +822,10 @@ upper(Orders.USER_ID) in (select upper(N) from table(cast(get_users(:u_name) as 
       PrecisionRule="true"
       EntityAttrName="DatZam"
       EntityUsage="Orders"
-      AliasName="DAT_ZAM"/>
+      AliasName="DAT_ZAM">
+        <TransientExpression
+            trustMode="untrusted"><![CDATA[adf.currentDateTime]]></TransientExpression>
+    </ViewAttribute>
     <ViewAttribute
         Name="AgentId"
         PrecisionRule="true"
@@ -939,8 +943,8 @@ upper(Orders.USER_ID) in (select upper(N) from table(cast(get_users(:u_name) as 
       AliasName="VIEW_ATTR"
       SQLType="NUMERIC"
       IsQueriable="false">
-        <RecalcCondition><![CDATA[true]]></RecalcCondition>
         <TransientExpression><![CDATA[OrdersTpUslugiView.sum("Summ != null ? Summ : 0")]]></TransientExpression>
+        <RecalcCondition><![CDATA[true]]></RecalcCondition>
         <Properties>
             <SchemaBasedProperties>
                 <TOOLTIP
@@ -961,8 +965,8 @@ upper(Orders.USER_ID) in (select upper(N) from table(cast(get_users(:u_name) as 
       AliasName="VIEW_ATTR"
       SQLType="NUMERIC"
       IsQueriable="false">
-        <RecalcCondition><![CDATA[true]]></RecalcCondition>
         <TransientExpression><![CDATA[OrdersTpUslugiView.count("Id != null ? Id : 0")]]></TransientExpression>
+        <RecalcCondition><![CDATA[true]]></RecalcCondition>
         <Properties>
             <SchemaBasedProperties>
                 <LABEL
@@ -983,8 +987,8 @@ upper(Orders.USER_ID) in (select upper(N) from table(cast(get_users(:u_name) as 
       AliasName="VIEW_ATTR"
       SQLType="NUMERIC"
       IsQueriable="false">
-        <RecalcCondition><![CDATA[true]]></RecalcCondition>
         <TransientExpression><![CDATA[OrdersTpOplatyView.sum("Sum1 != null ? Sum1 : 0")]]></TransientExpression>
+        <RecalcCondition><![CDATA[true]]></RecalcCondition>
         <Properties>
             <SchemaBasedProperties>
                 <LABEL
@@ -1005,8 +1009,8 @@ upper(Orders.USER_ID) in (select upper(N) from table(cast(get_users(:u_name) as 
       AliasName="VIEW_ATTR"
       SQLType="NUMERIC"
       IsQueriable="false">
-        <RecalcCondition><![CDATA[true]]></RecalcCondition>
         <TransientExpression><![CDATA[OrdersTpUslugiView.sum("PriceAdd != null ? PriceAdd : 0")]]></TransientExpression>
+        <RecalcCondition><![CDATA[true]]></RecalcCondition>
         <Properties>
             <SchemaBasedProperties>
                 <LABEL
@@ -1027,8 +1031,8 @@ upper(Orders.USER_ID) in (select upper(N) from table(cast(get_users(:u_name) as 
       AliasName="VIEW_ATTR"
       SQLType="NUMERIC"
       IsQueriable="false">
-        <RecalcCondition><![CDATA[true]]></RecalcCondition>
         <TransientExpression><![CDATA[(TotalSumUslugi != null ? TotalSumUslugi : 0)+(TotalSummUslugiAdd != null ? TotalSummUslugiAdd : 0)]]></TransientExpression>
+        <RecalcCondition><![CDATA[true]]></RecalcCondition>
         <Properties>
             <SchemaBasedProperties>
                 <TOOLTIP
@@ -1055,8 +1059,8 @@ upper(Orders.USER_ID) in (select upper(N) from table(cast(get_users(:u_name) as 
         AliasName="VIEW_ATTR"
         SQLType="NUMERIC"
         IsQueriable="false">
-        <RecalcCondition><![CDATA[true]]></RecalcCondition>
         <TransientExpression><![CDATA[(TotalSumm == null ? 0 : TotalSumOplaty == null ? 0 : TotalSumOplaty*100/TotalSumm)]]></TransientExpression>
+        <RecalcCondition><![CDATA[true]]></RecalcCondition>
         <Properties>
             <SchemaBasedProperties>
                 <LABEL
@@ -1101,7 +1105,6 @@ upper(Orders.USER_ID) in (select upper(N) from table(cast(get_users(:u_name) as 
               Operator="STARTSWITH"
               Conjunction="AND"
               Value=":Kname"
-              GenerateIsNullClauseForBindVars="false"
               IsBindVarValue="true"
               Required="Optional"/>
         </ViewCriteriaRow>

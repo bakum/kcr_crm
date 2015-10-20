@@ -43,6 +43,22 @@
         <dialog-return-value>#{pageFlowScope.OrderId}</dialog-return-value>
       </run-as-dialog>
     </task-flow-call>
+    <task-flow-call id="newOrder">
+      <task-flow-reference>
+        <document>/WEB-INF/newOrder.xml</document>
+        <id>newOrder</id>
+      </task-flow-reference>
+      <return-value id="__9">
+        <name>OrderId</name>
+        <value>#{pageFlowScope.OrderId}</value>
+      </return-value>
+      <run-as-dialog>
+        <display-type>
+          <inline-popup/>
+        </display-type>
+        <dialog-return-value>#{pageFlowScope.OrderId}</dialog-return-value>
+      </run-as-dialog>
+    </task-flow-call>
     <control-flow-rule id="__2">
       <from-activity-id>order</from-activity-id>
       <control-flow-case id="__3">
@@ -56,6 +72,10 @@
       <control-flow-case id="__6">
         <from-outcome>viewOrder</from-outcome>
         <to-activity-id>order-dialog-flow</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__8">
+        <from-outcome>newOrder</from-outcome>
+        <to-activity-id>newOrder</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <use-page-fragments/>

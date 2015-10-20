@@ -25,7 +25,9 @@
                                                         </af:menu>
                                                     </af:menuBar>
                                                     <af:toolbar id="t4">
-                                                        <af:button text="Новый заказ" id="b19" action="addOrder"/>
+                                                        <af:button text="Новый заказ" id="b19" action="newOrder"
+                                                                   useWindow="true" windowHeight="520"
+                                                                   windowWidth="800"/>
                                                         <af:button actionListener="#{bindings.CreateInsert.execute}"
                                                                    text="Добавить" disabled="#{bindings.Commit.enabled}"
                                                                    id="b5" visible="false">
@@ -126,7 +128,8 @@
                                                 </af:column>
                                                 <af:column headerText="#{bindings.OrdersView1.hints.DatZam.label}"
                                                            id="c77" width="120" sortable="true"
-                                                           sortProperty="#{bindings.OrdersView1.hints.DatZam.name}">
+                                                           sortProperty="#{bindings.OrdersView1.hints.DatZam.name}"
+                                                           visible="false">
                                                     <af:inputDate value="#{row.bindings.DatZam.inputValue}"
                                                                   label="#{bindings.OrdersView1.hints.DatZam.label}"
                                                                   required="#{bindings.OrdersView1.hints.DatZam.mandatory}"
@@ -284,7 +287,7 @@
                                                 <af:column sortProperty="#{bindings.OrdersView1.hints.DivisionId.name}"
                                                            sortable="true"
                                                            headerText="#{bindings.OrdersView1.hints.DivisionId.label}"
-                                                           id="c8">
+                                                           id="c8" align="right">
                                                     <af:selectOneChoice value="#{row.bindings.DivisionId.inputValue}"
                                                                         label="#{row.bindings.DivisionId.label}"
                                                                         required="#{bindings.OrdersView1.hints.DivisionId.mandatory}"
@@ -309,7 +312,7 @@
                                                     </af:selectOneChoice>
                                                 </af:column>
                                                 <af:column headerText="#{bindings.OrdersView1.hints.ManagerId.label}"
-                                                           id="c78" width="120">
+                                                           id="c78" width="120" align="right">
                                                     <af:selectOneChoice value="#{row.bindings.ManagerId.inputValue}"
                                                                         label="#{row.bindings.ManagerId.label}"
                                                                         required="#{bindings.OrdersView1.hints.ManagerId.mandatory}"
