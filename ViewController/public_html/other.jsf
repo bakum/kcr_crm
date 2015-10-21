@@ -68,7 +68,7 @@
                                         </af:panelGroupLayout>
                                     </af:panelLabelAndMessage>
                                     <af:inputListOfValues id="kontragNameId"
-                                                          popupTitle="Search and Select: #{bindings.KontragName.hints.label}"
+                                                          popupTitle="Найти и выбрать: #{bindings.KontragName.hints.label}"
                                                           value="#{bindings.KontragName.inputValue}"
                                                           label="#{bindings.KontragName.hints.label}"
                                                           model="#{bindings.KontragName.listOfValuesModel}"
@@ -146,7 +146,8 @@
                                                           model="#{bindings.KontragId.listOfValuesModel}"
                                                           required="#{bindings.KontragId.hints.mandatory}"
                                                           columns="#{bindings.KontragId.hints.displayWidth}"
-                                                          shortDesc="#{bindings.KontragId.hints.tooltip}">
+                                                          shortDesc="#{bindings.KontragId.hints.tooltip}"
+                                                          visible="false">
                                         <f:validator binding="#{bindings.KontragId.validator}"/>
                                     </af:inputListOfValues>
                                 </af:panelFormLayout>

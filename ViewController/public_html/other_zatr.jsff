@@ -127,7 +127,7 @@
                                         <af:column sortProperty="#{bindings.OtherZatratyView1.hints.DivisionId.name}"
                                                    sortable="true"
                                                    headerText="#{bindings.OtherZatratyView1.hints.DivisionId.label}"
-                                                   id="c5">
+                                                   id="c5" align="right">
                                             <af:selectOneChoice value="#{row.bindings.DivisionId.inputValue}"
                                                                 label="#{row.bindings.DivisionId.label}"
                                                                 required="#{bindings.OtherZatratyView1.hints.DivisionId.mandatory}"
@@ -140,7 +140,7 @@
                                         <af:column sortProperty="#{bindings.OtherZatratyView1.hints.UserId.name}"
                                                    sortable="true"
                                                    headerText="#{bindings.OtherZatratyView1.hints.UserId.label}"
-                                                   id="c6">
+                                                   id="c6" align="right">
                                             <af:selectOneChoice value="#{row.bindings.UserId.inputValue}"
                                                                 label="#{row.bindings.UserId.label}"
                                                                 required="#{bindings.OtherZatratyView1.hints.UserId.mandatory}"

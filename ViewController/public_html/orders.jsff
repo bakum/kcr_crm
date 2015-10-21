@@ -27,7 +27,8 @@
                                                     <af:toolbar id="t4">
                                                         <af:button text="Новый заказ" id="b19" action="newOrder"
                                                                    useWindow="true" windowHeight="520"
-                                                                   windowWidth="800"/>
+                                                                   windowWidth="800"
+                                                                   returnListener="#{orders.onReturnValue}"/>
                                                         <af:button actionListener="#{bindings.CreateInsert.execute}"
                                                                    text="Добавить" disabled="#{bindings.Commit.enabled}"
                                                                    id="b5" visible="false">
