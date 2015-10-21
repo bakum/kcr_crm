@@ -79,6 +79,7 @@
                                                           readOnly="#{bindings.OthEditable.inputValue == 1 ? false : true}"
                                                           visible="#{other_jsf.visibleKontrag}">
                                         <f:validator binding="#{bindings.KontragName.validator}"/>
+                                        <af:autoSuggestBehavior suggestedItems="#{bindings.KontragName.suggestedItems}"/>
                                     </af:inputListOfValues>
                                     <af:panelLabelAndMessage label="#{bindings.DivisionId.label}" id="plam2"
                                                              labelStyle="font-weight: bold;">
