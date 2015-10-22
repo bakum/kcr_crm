@@ -1,7 +1,7 @@
 ﻿--
 -- Скрипт сгенерирован Devart dbForge Studio for Oracle, Версия 3.7.472.0
 -- Домашняя страница продукта: http://www.devart.com/ru/dbforge/oracle/studio
--- Дата скрипта: 20.10.2015 19:04:11
+-- Дата скрипта: 21.10.2015 13:12:16
 -- Версия сервера: Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production With the Partitioning, OLAP, Data Mining and Real Application Testing options
 -- Версия клиента: 
 --
@@ -28,7 +28,7 @@ ALTER SESSION SET TIME_ZONE = '+03:00';
 -- Описание для последовательности ORDERS_NUM_SEQ
 --
 CREATE SEQUENCE ORDERS_NUM_SEQ
-START WITH 681
+START WITH 22
 INCREMENT BY 1
 MAXVALUE 1000000000000000000000000000
 MINVALUE 1
@@ -38,7 +38,7 @@ CYCLE;
 -- Описание для последовательности OTHER_ZATR_NUM_SEQ
 --
 CREATE SEQUENCE OTHER_ZATR_NUM_SEQ
-START WITH 181
+START WITH 42
 INCREMENT BY 1
 MAXVALUE 1000000000000000000000000000
 MINVALUE 1
@@ -48,7 +48,7 @@ CYCLE;
 -- Описание для последовательности PKO_NUM_SEQ
 --
 CREATE SEQUENCE PKO_NUM_SEQ
-START WITH 141
+START WITH 2
 INCREMENT BY 1
 MAXVALUE 1000000000000000000000000000
 MINVALUE 1
@@ -58,7 +58,7 @@ CYCLE;
 -- Описание для последовательности PROFIT_DISTRIB_NUM_SEQ
 --
 CREATE SEQUENCE PROFIT_DISTRIB_NUM_SEQ
-START WITH 121
+START WITH 2
 INCREMENT BY 1
 MAXVALUE 1000000000000000000000000000
 MINVALUE 1
@@ -68,14 +68,14 @@ CYCLE;
 -- Описание для последовательности PS_TXN_SEQ
 --
 CREATE SEQUENCE PS_TXN_SEQ
-START WITH 165651
+START WITH 166051
 INCREMENT BY 50;
 
 --
 -- Описание для последовательности RKO_NUM_SEQ
 --
 CREATE SEQUENCE RKO_NUM_SEQ
-START WITH 161
+START WITH 22
 INCREMENT BY 1
 MAXVALUE 1000000000000000000000000000
 MINVALUE 1
@@ -85,7 +85,7 @@ CYCLE;
 -- Описание для последовательности START_OST_NUM_SEQ
 --
 CREATE SEQUENCE START_OST_NUM_SEQ
-START WITH 141
+START WITH 2
 INCREMENT BY 1
 MAXVALUE 1000000000000000000000000000
 MINVALUE 1
@@ -447,7 +447,9 @@ CREATE TABLE QRTZ_JOB_DETAILS (
   IS_UPDATE_DATA    VARCHAR2(1 BYTE)   NOT NULL,
   REQUESTS_RECOVERY VARCHAR2(1 BYTE)   NOT NULL,
   JOB_DATA          BLOB,
-  CONSTRAINT QRTZ_JOB_DETAILS_PK PRIMARY KEY (SCHED_NAME, JOB_NAME, JOB_GROUP)
+  CONSTRAINT QRTZ_JOB_DETAILS_PK PRIMARY KEY (SCHED_NAME, JOB_NAME, JOB_GROUP) USING INDEX STORAGE (INITIAL 64 K
+                                                                                                    NEXT 1 M
+                                                                                                    MAXEXTENTS UNLIMITED)
 )
 LOGGING;
 
@@ -881,7 +883,9 @@ CREATE TABLE QRTZ_FIRED_TRIGGERS (
   JOB_GROUP         VARCHAR2(200 BYTE),
   IS_NONCONCURRENT  VARCHAR2(1 BYTE),
   REQUESTS_RECOVERY VARCHAR2(1 BYTE),
-  CONSTRAINT QRTZ_FIRED_TRIGGER_PK PRIMARY KEY (SCHED_NAME, ENTRY_ID)
+  CONSTRAINT QRTZ_FIRED_TRIGGER_PK PRIMARY KEY (SCHED_NAME, ENTRY_ID) USING INDEX STORAGE (INITIAL 64 K
+                                                                                           NEXT 1 M
+                                                                                           MAXEXTENTS UNLIMITED)
 )
 LOGGING;
 
@@ -985,6 +989,21 @@ CREATE TABLE XML_T (
 LOGGING;
 
 COMMENT ON TABLE XML_T IS 'Служебный';
+
+--
+-- Описание для таблицы OPERATION_OTHER
+--
+CREATE TABLE OPERATION_OTHER (
+  ID       VARCHAR2(50 CHAR) NOT NULL,
+  NAME     VARCHAR2(50 CHAR) NOT NULL,
+  FULLNAME VARCHAR2(50 CHAR) NOT NULL,
+  CONSTRAINT OPERATION_OTHER_PK PRIMARY KEY (ID) USING INDEX STORAGE (INITIAL 64 K
+                                                                      NEXT 1 M
+                                                                      MAXEXTENTS UNLIMITED)
+)
+LOGGING;
+
+COMMENT ON TABLE OPERATION_OTHER IS 'ОперацииПрочиеЗатраты';
 
 --
 -- Описание для таблицы KONTRAGENTS
@@ -1655,7 +1674,9 @@ CREATE TABLE QRTZ_SIMPLE_TRIGGERS (
   REPEAT_COUNT    NUMBER(7, 0)       NOT NULL,
   REPEAT_INTERVAL NUMBER(12, 0)      NOT NULL,
   TIMES_TRIGGERED NUMBER(10, 0)      NOT NULL,
-  CONSTRAINT QRTZ_SIMPLE_TRIG_PK PRIMARY KEY (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP),
+  CONSTRAINT QRTZ_SIMPLE_TRIG_PK PRIMARY KEY (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP) USING INDEX STORAGE (INITIAL 64 K
+                                                                                                            NEXT 1 M
+                                                                                                            MAXEXTENTS UNLIMITED),
   CONSTRAINT QRTZ_SIMPLE_TRIG_TO_TRIG_FK FOREIGN KEY (SCHED_NAME,
   TRIGGER_NAME,
   TRIGGER_GROUP)
@@ -1847,6 +1868,8 @@ CREATE TABLE OTHER_ZATRATY (
   CURR_ID       VARCHAR2(50 CHAR) NOT NULL,
   KASSA_ID      VARCHAR2(50 CHAR) NOT NULL,
   ACTIVITIES_ID VARCHAR2(50 CHAR) NOT NULL,
+  OPARATION_ID  VARCHAR2(50 CHAR) NOT NULL,
+  KONTRAG_ID    VARCHAR2(50 CHAR),
   CONSTRAINT OTHER_ZATRATY_PK PRIMARY KEY (ID) USING INDEX STORAGE (INITIAL 64 K
                                                                     NEXT 1 M
                                                                     MAXEXTENTS UNLIMITED),
@@ -1859,7 +1882,11 @@ CREATE TABLE OTHER_ZATRATY (
   CONSTRAINT OTHER_ZATRATY_FK4 FOREIGN KEY (KASSA_ID)
   REFERENCES KASSA (ID),
   CONSTRAINT OTHER_ZATRATY_FK5 FOREIGN KEY (ACTIVITIES_ID)
-  REFERENCES TYPE_OF_ACTIVITIES (ID)
+  REFERENCES TYPE_OF_ACTIVITIES (ID),
+  CONSTRAINT OTHER_ZATRATY_FK6 FOREIGN KEY (OPARATION_ID)
+  REFERENCES OPERATION_OTHER (ID),
+  CONSTRAINT OTHER_ZATRATY_FK7 FOREIGN KEY (KONTRAG_ID)
+  REFERENCES KONTRAGENTS (ID) ON DELETE CASCADE
 )
 LOGGING;
 
@@ -5626,6 +5653,16 @@ BEGIN
   )
   VALUES ('MOVE_KASSA', 'Перемещение между кассами');
 
+  --Виды операций Прочие затраты    
+  INSERT INTO OPERATION_OTHER (
+    NAME, FULLNAME
+  )
+  VALUES ('FROM_KASSA', 'Расход из кассы');
+  INSERT INTO OPERATION_RKO (
+    NAME, FULLNAME
+  )
+  VALUES ('FROM_SUPPLIER', 'Расход от подотчетника');
+
 
   --Кампании (колл-листы) по-умолчанию
   INSERT INTO COMPAIGNS (
@@ -9171,6 +9208,8 @@ CREATE OR REPLACE PACKAGE "OTHER_ENTRY"
                                   p_del IN NUMBER DEFAULT 0);
   PROCEDURE other_move_all;
   PROCEDURE other_remove_all;
+  FUNCTION get_operationname(p_id IN VARCHAR2)
+    RETURN VARCHAR2;
 
 END other_entry;
 /
@@ -9352,6 +9391,180 @@ CREATE OR REPLACE PACKAGE BODY "OTHER_ENTRY"
       WHEN OTHERS THEN RAISE_APPLICATION_ERROR(-20001, 'Error other_zatraty move for plan accounting! ' || SQLERRM, TRUE);
     END set_subconto_tp_zatraty;
 
+  PROCEDURE set_subconto_zatraty_kontrag(p_move_rec moves % ROWTYPE)
+    AS
+      p_ret_rec   moves % ROWTYPE;
+      p_sub_count NUMBER(10);
+      p_counter   NUMBER(10);
+      p_sub_name  plan_type_subconto.fullname % TYPE;
+      p_other     other_zatraty % ROWTYPE;
+      p_plan_acc  plan_acc % ROWTYPE;
+      p_upr_val   currency.id % TYPE;
+    BEGIN
+      SELECT *
+        INTO p_other
+        FROM OTHER_ZATRATY
+        WHERE id = p_move_rec.registrator_id;
+      SELECT id
+        INTO p_upr_val
+        FROM currency
+        WHERE predefined = 1;
+
+      FOR i IN (SELECT *
+          FROM other_zatraty_tab_part_zatraty
+          WHERE oth_id = p_other.id)
+      LOOP
+        p_ret_rec := p_move_rec;
+
+
+        --Субконто дебета
+        SELECT COUNT(*)
+          INTO p_sub_count
+          FROM plan_acc_subconto
+          WHERE plan_acc_id = p_ret_rec.plan_acc_deb_id;
+        IF p_sub_count > 0
+        THEN
+          p_counter := 0;
+          FOR x IN (SELECT *
+              FROM plan_acc_subconto
+              WHERE plan_acc_id = p_ret_rec.plan_acc_deb_id)
+          LOOP
+            p_counter := p_counter + 1;
+            SELECT fullname
+              INTO p_sub_name
+              FROM plan_type_subconto
+              WHERE id = x.plan_type_subc;
+            IF UPPER(p_sub_name) = 'СТАТЬЯ ЗАТРАТ'
+            THEN
+              IF p_counter = 1
+              THEN
+                p_ret_rec.subconto1_deb := i.zatr_id;
+              END IF;
+              IF p_counter = 2
+              THEN
+                p_ret_rec.subconto2_deb := i.zatr_id;
+              END IF;
+              IF p_counter = 3
+              THEN
+                p_ret_rec.subconto3_deb := i.zatr_id;
+              END IF;
+            END IF;
+            IF UPPER(p_sub_name) = 'ЦФО'
+            THEN
+              IF p_counter = 1
+              THEN
+                p_ret_rec.subconto1_deb := p_other.division_id;
+              END IF;
+              IF p_counter = 2
+              THEN
+                p_ret_rec.subconto2_deb := p_other.division_id;
+              END IF;
+              IF p_counter = 3
+              THEN
+                p_ret_rec.subconto3_deb := p_other.division_id;
+              END IF;
+            END IF;
+            IF UPPER(p_sub_name) = 'КАССА'
+            THEN
+              IF p_counter = 1
+              THEN
+                p_ret_rec.subconto1_deb := p_other.kassa_id;
+              END IF;
+              IF p_counter = 2
+              THEN
+                p_ret_rec.subconto2_deb := p_other.kassa_id;
+              END IF;
+              IF p_counter = 3
+              THEN
+                p_ret_rec.subconto3_deb := p_other.kassa_id;
+              END IF;
+            END IF;
+          END LOOP;
+        END IF;
+
+        --Субконто кредита
+        SELECT COUNT(*)
+          INTO p_sub_count
+          FROM plan_acc_subconto
+          WHERE plan_acc_id = p_ret_rec.plan_acc_kred_id;
+        IF p_sub_count > 0
+        THEN
+          p_counter := 0;
+          FOR x IN (SELECT *
+              FROM plan_acc_subconto
+              WHERE plan_acc_id = p_ret_rec.plan_acc_kred_id)
+          LOOP
+            p_counter := p_counter + 1;
+            SELECT fullname
+              INTO p_sub_name
+              FROM plan_type_subconto
+              WHERE id = x.plan_type_subc;
+            IF UPPER(p_sub_name) = 'КОНТРАГЕНТЫ'
+            THEN
+              IF p_counter = 1
+              THEN
+                p_ret_rec.subconto1_kred := p_other.kontrag_id;
+              END IF;
+              IF p_counter = 2
+              THEN
+                p_ret_rec.subconto2_kred := p_other.kontrag_id;
+              END IF;
+              IF p_counter = 3
+              THEN
+                p_ret_rec.subconto3_kred := p_other.kontrag_id;
+              END IF;
+            END IF;
+            IF UPPER(p_sub_name) = 'ЦФО'
+            THEN
+              IF p_counter = 1
+              THEN
+                p_ret_rec.subconto1_kred := p_other.division_id;
+              END IF;
+              IF p_counter = 2
+              THEN
+                p_ret_rec.subconto2_kred := p_other.division_id;
+              END IF;
+              IF p_counter = 3
+              THEN
+                p_ret_rec.subconto3_kred := p_other.division_id;
+              END IF;
+            END IF;
+            IF UPPER(p_sub_name) = 'СТАТЬЯ ЗАТРАТ'
+            THEN
+              IF p_counter = 1
+              THEN
+                p_ret_rec.subconto1_kred := i.zatr_id;
+              END IF;
+              IF p_counter = 2
+              THEN
+                p_ret_rec.subconto2_kred := i.zatr_id;
+              END IF;
+              IF p_counter = 3
+              THEN
+                p_ret_rec.subconto3_kred := i.zatr_id;
+              END IF;
+            END IF;
+          END LOOP;
+        END IF;
+
+        p_ret_rec.curr_deb := p_other.curr_id;
+        p_ret_rec.summ_val_deb := entry.sign_of_summ(p_ret_rec.plan_acc_deb_id, i.summa, 1);
+
+        p_ret_rec.curr_kred := p_other.curr_id;
+        p_ret_rec.summ_val_kredit := entry.sign_of_summ(p_ret_rec.plan_acc_kred_id, i.summa, 0);
+
+        p_ret_rec.summ_upr_deb := currency_pkg.calculate_from_curr_to_curr(p_ret_rec.curr_deb, p_upr_val, p_ret_rec.period, p_ret_rec.summ_val_deb);
+        p_ret_rec.summ_upr_kred := currency_pkg.calculate_from_curr_to_curr(p_ret_rec.curr_kred, p_upr_val, p_ret_rec.period, p_ret_rec.summ_val_kredit);
+
+        p_ret_rec.version := systimestamp;
+
+        INSERT INTO moves
+        VALUES p_ret_rec;
+      END LOOP;
+    EXCEPTION
+      WHEN OTHERS THEN RAISE_APPLICATION_ERROR(-20001, 'Error other_zatraty move for plan accounting! ' || SQLERRM, TRUE);
+    END set_subconto_zatraty_kontrag;
+
   PROCEDURE set_subconto_tp_result(p_move_rec moves % ROWTYPE)
     AS
       p_ret_rec   moves % ROWTYPE;
@@ -9529,13 +9742,15 @@ CREATE OR REPLACE PACKAGE BODY "OTHER_ENTRY"
 
   PROCEDURE other_move_plan_acc(p_id IN VARCHAR2)
     AS
-      p_other_rec    other_zatraty % ROWTYPE;
-      p_move_rec     moves % ROWTYPE;
-      p_version      VARCHAR2(1000);
-      in_use         EXCEPTION;
-      p_counter      NUMBER(10);
+      p_other_rec          other_zatraty % ROWTYPE;
+      p_move_rec           moves % ROWTYPE;
+      p_version            VARCHAR2(1000);
+      in_use               EXCEPTION;
+      p_counter            NUMBER(10);
+      p_id_kassa_operation operation_other.id % TYPE;
+      p_code_kontrag       plan_acc.id % TYPE;
       PRAGMA EXCEPTION_INIT (in_use, -54);
-      period_blocked EXCEPTION;
+      period_blocked       EXCEPTION;
     BEGIN
       SELECT *
         INTO p_other_rec
@@ -9557,6 +9772,12 @@ CREATE OR REPLACE PACKAGE BODY "OTHER_ENTRY"
         INTO p_version
         FROM OTHER_ZATRATY
         WHERE id = p_id;
+
+      SELECT id
+        INTO p_id_kassa_operation
+        FROM operation_other
+        WHERE UPPER(name) = UPPER('FROM_KASSA')
+          AND ROWNUM = 1;
 
       p_move_rec.period := p_other_rec.dat;
       p_counter := 0;
@@ -9580,7 +9801,18 @@ CREATE OR REPLACE PACKAGE BODY "OTHER_ENTRY"
         IF p_counter = 1
         THEN
           p_move_rec.description := 'Проводка ТЧ Затраты - Списание на административные затраты';
-          set_subconto_tp_zatraty(p_move_rec);
+          IF p_other_rec.oparation_id = p_id_kassa_operation
+          THEN
+            set_subconto_tp_zatraty(p_move_rec);
+          ELSE
+            SELECT id
+              INTO p_code_kontrag
+              FROM plan_acc
+              WHERE code LIKE '5091'
+                AND ROWNUM = 1;
+            p_move_rec.plan_acc_kred_id := p_code_kontrag;
+            set_subconto_zatraty_kontrag(p_move_rec);
+          END IF;
         END IF;
 
         --Проводка ТЧ Затраты - Списание на затрат на финансовый результат
@@ -9676,6 +9908,21 @@ CREATE OR REPLACE PACKAGE BODY "OTHER_ENTRY"
     EXCEPTION
       WHEN OTHERS THEN RAISE_APPLICATION_ERROR(-20001, 'Error other_zatraty remove all for plan accounting! ' || SQLERRM, TRUE);
     END other_remove_all;
+
+  FUNCTION get_operationname(p_id IN VARCHAR2)
+    RETURN VARCHAR2
+    AS
+      pp_id VARCHAR2(60);
+    BEGIN
+      SELECT r.name
+        INTO pp_id
+        FROM operation_other r
+        WHERE UPPER(r.id) = UPPER(p_id);
+      RETURN pp_id;
+
+    EXCEPTION
+      WHEN no_data_found THEN RETURN 'none';
+    END get_operationname;
 
 END other_entry;
 
@@ -10773,14 +11020,14 @@ CREATE OR REPLACE PACKAGE BODY "CURRENCY_PKG"
         FROM currency
         WHERE id = p_code;
 
-      SELECT TO_NUMBER(EXTRACTVALUE(VALUE(dtl), 'item/size'), '9999'),
-             TO_NUMBER(EXTRACTVALUE(VALUE(dtl), 'item/rate'), '9999.999999')
+      SELECT TO_NUMBER(EXTRACTVALUE(value(dtl), 'item/size'), '9999'),
+             TO_NUMBER(EXTRACTVALUE(value(dtl), 'item/rate'), '9999.999999')
         INTO nominal,
              val
         FROM (SELECT currency_pkg.get_xmlfromurl('http://bank-ua.com/export/currrate.xml', 'CL8MSWIN1251') xml
                  FROM dual) s,
              TABLE (XMLSEQUENCE(s.xml.extract('chapter/item'))) dtl
-        WHERE EXTRACTVALUE(VALUE(dtl), 'item/code') = p_curr_rec.code;
+        WHERE EXTRACTVALUE(value(dtl), 'item/code') = p_curr_rec.code;
       --select to_char(p_dat,'dd')|| to_char(p_dat,'mm')|| to_char(p_dat,'yyyy') into p_date_str from dual;
 
       --select to_number(t.xml.extract('//ValCurs/Valute[@id='||p_curr_rec.id_xml||']/Nominal/text()'),'9999'),
@@ -11238,6 +11485,60 @@ CREATE OR REPLACE FUNCTION "ACC_TYPE_CONV"(bl_expr IN VARCHAR2)
     END IF;
     RETURN 'АКТИВНЫЙ/ПАССИВНЫЙ';
   END acc_type_conv;
+/
+
+--
+-- Описание для процедуры CLEAR_SEQ
+--
+CREATE OR REPLACE PROCEDURE "CLEAR_SEQ"(sequence_name IN VARCHAR2,
+                                        min_value     IN NUMBER DEFAULT 1)
+  AS
+    sql_str      VARCHAR2(500) := NULL;
+    cache_size   VARCHAR2(30)  := NULL;
+    seq_curr_val NUMBER        := 0;
+    increment_by NUMBER        := 0;
+  --sequence_name varchar2(30)  := 'TEST_SEQ'; -- Вместо TEST_SEQ указать 
+  -- имя нужной последовательности
+  BEGIN
+    --
+    -- Получим значения для параметров последовательности
+    -- CACHE_SIZE, MIN_VALUE, INCREMENT_BY 
+    sql_str := 'select case cache_size 
+when 0 then '' nocache '' 
+else '' cache ''||to_char(cache_size) 
+end,  
+increment_by 
+from user_sequences 
+where sequence_name = ''' || UPPER(sequence_name) || '''';
+    EXECUTE IMMEDIATE sql_str
+      INTO cache_size,
+           increment_by;
+    --
+    -- Отключим кеширование последовательности
+    sql_str := 'alter sequence ' || sequence_name || ' nocache';
+    EXECUTE IMMEDIATE sql_str;
+    --
+    -- Получим следующее значение из последовательности
+    sql_str := 'select ' || sequence_name || '.NEXTVAL from dual';
+    EXECUTE IMMEDIATE sql_str
+      INTO seq_curr_val;
+    --
+    -- Изменим шаг инкремента последовательности на нужное значение
+    sql_str := 'alter sequence ' || sequence_name || ' increment by ' ||
+    TO_CHAR(min_value - seq_curr_val);
+    EXECUTE IMMEDIATE sql_str;
+    --
+    -- и вернем значение последовательности в 1 (или в MIN_VALUE, если оно больше 1)
+    sql_str := 'select ' || sequence_name || '.NEXTVAL from dual';
+    EXECUTE IMMEDIATE sql_str
+      INTO seq_curr_val;
+    --
+    -- Установим инкремент и кэширование последовательности в исходные значения
+    sql_str := 'alter sequence ' || sequence_name ||
+    ' increment by ' || increment_by || cache_size;
+    EXECUTE IMMEDIATE sql_str;
+
+  END clear_seq;
 /
 
 --
@@ -12184,7 +12485,20 @@ CREATE OR REPLACE VIEW VW_MOVE_OTHER (
         INNER JOIN DIVISIONS
           ON VW_MOVES.SUBCONTO1_DEB = DIVISIONS.ID
           INNER JOIN ZATRATY
-            ON VW_MOVES.SUBCONTO1_KRED = ZATRATY.ID;
+            ON VW_MOVES.SUBCONTO1_KRED = ZATRATY.ID
+      UNION
+    SELECT VW_MOVES.REGISTRATOR_ID,
+           VW_MOVES.DEB,
+           VW_MOVES.SUM_DEB,
+           VW_MOVES.KRED,
+           VW_MOVES.SUM_KRED,
+           ZATRATY.FULLNAME AS Subconto1_Deb,
+           KONTRAGENTS.FULLNAME AS Subconto1_Kred
+      FROM VW_MOVES
+        INNER JOIN ZATRATY
+          ON VW_MOVES.SUBCONTO1_DEB = ZATRATY.ID
+          INNER JOIN KONTRAGENTS
+            ON VW_MOVES.SUBCONTO1_KRED = KONTRAGENTS.ID;
 
 --
 -- Описание для представления VW_MOVE_ORDERS
@@ -13564,6 +13878,27 @@ BEGIN
     SELECT systimestamp
       INTO :new."VERSION"
       FROM dual;
+  END IF;
+END;
+
+/
+
+--
+-- Описание для триггера OPERATION_OTHER_TGR
+--
+CREATE OR REPLACE TRIGGER OPERATION_OTHER_TGR
+  BEFORE INSERT OR UPDATE
+  ON OPERATION_OTHER
+  FOR EACH ROW
+BEGIN
+  IF inserting
+  THEN
+    IF :NEW."ID" IS NULL
+    THEN
+      SELECT utility.uuid()
+        INTO :new."ID"
+        FROM dual;
+    END IF;
   END IF;
 END;
 

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.10.8" id="KlientPageDef"
+                Package="ua.divas.bean.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables">
+      <variable Type="java.lang.String" Name="createKontr_return" IsQueriable="false" IsUpdateable="0"
+                DefaultValue="${bindings.createKontr.result}"/>
+      <variable Type="java.lang.String" Name="createKontr_p_name" IsQueriable="false"/>
+      <variable Type="int" Name="createKontr_isSupp" IsQueriable="false"/>
+      <variable Type="int" Name="createKontr_isMeasr" IsQueriable="false"/>
+      <variable Type="int" Name="createKontr_isByer" IsQueriable="false"/>
+    </variableIterator>
+  </executables>
+  <bindings>
+    <methodAction id="createKontr" RequiresUpdateModel="true" Action="invokeMethod" MethodName="createKontr"
+                  IsViewObjectMethod="true" DataControl="AppModuleDataControl"
+                  InstanceName="data.AppModuleDataControl.KontragentsView1"
+                  ReturnName="data.AppModuleDataControl.methodResults.createKontr_AppModuleDataControl_KontragentsView1_createKontr_result">
+      <NamedData NDName="p_name" NDType="java.lang.String" NDValue="${bindings.createKontr_p_name}"/>
+      <NamedData NDName="isSupp" NDType="int" NDValue="${bindings.createKontr_isSupp}"/>
+      <NamedData NDName="isMeasr" NDType="int" NDValue="${bindings.createKontr_isMeasr}"/>
+      <NamedData NDName="isByer" NDType="int" NDValue="${bindings.createKontr_isByer}"/>
+    </methodAction>
+    <attributeValues IterBinding="variables" id="p_name">
+      <AttrNames>
+        <Item Value="createKontr_p_name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="isSupp">
+      <AttrNames>
+        <Item Value="createKontr_isSupp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="isMeasr">
+      <AttrNames>
+        <Item Value="createKontr_isMeasr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="isByer">
+      <AttrNames>
+        <Item Value="createKontr_isByer"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

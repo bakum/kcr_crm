@@ -67,20 +67,29 @@
                                             </af:selectOneChoice>
                                         </af:panelGroupLayout>
                                     </af:panelLabelAndMessage>
-                                    <af:inputListOfValues id="kontragNameId"
-                                                          popupTitle="Найти и выбрать: #{bindings.KontragName.hints.label}"
-                                                          value="#{bindings.KontragName.inputValue}"
-                                                          label="#{bindings.KontragName.hints.label}"
-                                                          model="#{bindings.KontragName.listOfValuesModel}"
-                                                          required="#{bindings.KontragName.hints.mandatory}"
-                                                          columns="#{bindings.KontragName.hints.displayWidth}"
-                                                          shortDesc="#{bindings.KontragName.hints.tooltip}"
-                                                          labelStyle="font-weight: bold;"
-                                                          readOnly="#{bindings.OthEditable.inputValue == 1 ? false : true}"
-                                                          visible="#{other_jsf.visibleKontrag}">
-                                        <f:validator binding="#{bindings.KontragName.validator}"/>
-                                        <af:autoSuggestBehavior suggestedItems="#{bindings.KontragName.suggestedItems}"/>
-                                    </af:inputListOfValues>
+                                    <af:panelLabelAndMessage label="#{bindings.KontragName.hints.label}" id="plam5"
+                                                             labelStyle="font-weight: bold;"
+                                                             visible="#{other_jsf.visibleKontrag}">
+                                        <af:panelGroupLayout id="pgl7" layout="horizontal">
+                                            <af:inputListOfValues id="kontragNameId"
+                                                                  popupTitle="Найти и выбрать: #{bindings.KontragName.hints.label}"
+                                                                  value="#{bindings.KontragName.inputValue}"
+                                                                  model="#{bindings.KontragName.listOfValuesModel}"
+                                                                  required="#{bindings.KontragName.hints.mandatory}"
+                                                                  columns="#{bindings.KontragName.hints.displayWidth}"
+                                                                  shortDesc="#{bindings.KontragName.hints.tooltip}"
+                                                                  readOnly="#{bindings.OthEditable.inputValue == 1 ? false : true}"
+                                                                  createPopupId="pKontrag">
+                                                <f:validator binding="#{bindings.KontragName.validator}"/>
+                                                <af:autoSuggestBehavior suggestedItems="#{bindings.KontragName.suggestedItems}"/>
+                                            </af:inputListOfValues>
+                                            <af:spacer width="10" height="10" id="s2"/>
+                                            <af:button id="b8" icon="/img/Symbol_Add.png" action="newKontrag"
+                                                       useWindow="true" windowHeight="100" windowWidth="100"
+                                                       returnListener="#{other_jsf.onReturnKontrag}" immediate="true"
+                                                       windowModalityType="applicationModal" rendered="false"/>
+                                        </af:panelGroupLayout>
+                                    </af:panelLabelAndMessage>
                                     <af:panelLabelAndMessage label="#{bindings.DivisionId.label}" id="plam2"
                                                              labelStyle="font-weight: bold;">
                                         <af:panelGroupLayout id="pgl3" layout="horizontal">
@@ -161,6 +170,67 @@
                                         </af:button>
                                     </af:toolbar>
                                 </f:facet>
+                                <af:popup childCreation="deferred" autoCancel="disabled" id="pKontrag"
+                                          contentDelivery="lazyUncached"
+                                          popupFetchListener="#{other_jsf.onPopupCreateKontr}"
+                                          binding="#{other_jsf.kontrPopup}">
+                                    <af:dialog id="d3" type="none" closeIconVisible="false" title="Новый контрагент"
+                                               dialogListener="#{other_jsf.onNewKontragDialog}">
+                                        <af:panelFormLayout id="pfl2">
+                                            <af:inputText value="#{bindings.p_name.inputValue}"
+                                                          label="Наименование"
+                                                          columns="#{bindings.p_name.hints.displayWidth}"
+                                                          maximumLength="#{bindings.p_name.hints.precision}"
+                                                          shortDesc="#{bindings.p_name.hints.tooltip}" id="it9"
+                                                          required="true" binding="#{other_jsf.kontrName}"
+                                                          autoSubmit="true">
+                                                <f:validator binding="#{bindings.p_name.validator}"/>
+                                            </af:inputText>
+                                            <af:inputText value="#{bindings.isSupp.inputValue}"
+                                                          label="#{bindings.isSupp.hints.label}"
+                                                          required="#{bindings.isSupp.hints.mandatory}"
+                                                          columns="#{bindings.isSupp.hints.displayWidth}"
+                                                          maximumLength="#{bindings.isSupp.hints.precision}"
+                                                          shortDesc="#{bindings.isSupp.hints.tooltip}" id="it10"
+                                                          visible="false">
+                                                <f:validator binding="#{bindings.isSupp.validator}"/>
+                                            </af:inputText>
+                                            <af:inputText value="#{bindings.isMeasr.inputValue}"
+                                                          label="#{bindings.isMeasr.hints.label}"
+                                                          required="#{bindings.isMeasr.hints.mandatory}"
+                                                          columns="#{bindings.isMeasr.hints.displayWidth}"
+                                                          maximumLength="#{bindings.isMeasr.hints.precision}"
+                                                          shortDesc="#{bindings.isMeasr.hints.tooltip}" id="it11"
+                                                          visible="false">
+                                                <f:validator binding="#{bindings.isMeasr.validator}"/>
+                                            </af:inputText>
+                                            <af:inputText value="#{bindings.isByer.inputValue}"
+                                                          label="#{bindings.isByer.hints.label}"
+                                                          required="#{bindings.isByer.hints.mandatory}"
+                                                          columns="#{bindings.isByer.hints.displayWidth}"
+                                                          maximumLength="#{bindings.isByer.hints.precision}"
+                                                          shortDesc="#{bindings.isByer.hints.tooltip}" id="it12"
+                                                          visible="false">
+                                                <f:validator binding="#{bindings.isByer.validator}"/>
+                                            </af:inputText>
+                                            <af:button actionListener="#{bindings.createKontrag.execute}"
+                                                       text="createKontrag"
+                                                       disabled="#{!bindings.createKontrag.enabled}" id="b9"
+                                                       visible="false"/>
+                                        </af:panelFormLayout>
+                                        <f:facet name="buttonBar">
+                                            <af:panelGroupLayout id="pgl8" layout="horizontal" halign="right">
+                                                <af:toolbar id="t7">
+                                                    <af:button text="Ok" id="bNewKontrag"
+                                                               actionListener="#{other_jsf.onSaveKontrag}"
+                                                               immediate="true"/>
+                                                    <af:button text="Отмена" id="b10" immediate="true"
+                                                               actionListener="#{other_jsf.onCancelKontrag}"/>
+                                                </af:toolbar>
+                                            </af:panelGroupLayout>
+                                        </f:facet>
+                                    </af:dialog>
+                                </af:popup>
                             </af:showDetailItem>
                             <af:showDetailItem text="Затраты" id="sdi2"
                                                rendered="#{bindings.Dat.inputValue==null ? false : true}">

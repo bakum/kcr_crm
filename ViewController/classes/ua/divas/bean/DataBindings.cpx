@@ -71,6 +71,9 @@
     <page path="/inside.jsff" usageId="ua_divas_bean_insidePageDef"/>
     <page path="/WEB-INF/newOrder.xml#newOrder@CreateInsert"
           usageId="ua_divas_bean_newOrder_newOrder_CreateInsertPageDef"/>
+    <page path="/WEB-INF/newKontrag.xml#newKontrag@CreateInsert"
+          usageId="ua_divas_bean_newKontrag_newKontrag_CreateInsertPageDef"/>
+    <page path="/Klient.jsf" usageId="ua_divas_bean_KlientPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="ua_divas_view_indexPageDef" path="ua.divas.bean.pageDefs.indexPageDef"/>
@@ -136,6 +139,9 @@
     <page id="ua_divas_bean_insidePageDef" path="ua.divas.bean.pageDefs.insidePageDef"/>
     <page id="ua_divas_bean_newOrder_newOrder_CreateInsertPageDef"
           path="ua.divas.bean.pageDefs.newOrder_newOrder_CreateInsertPageDef"/>
+    <page id="ua_divas_bean_newKontrag_newKontrag_CreateInsertPageDef"
+          path="ua.divas.bean.pageDefs.newKontrag_newKontrag_CreateInsertPageDef"/>
+    <page id="ua_divas_bean_KlientPageDef" path="ua.divas.bean.pageDefs.KlientPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     <dc id="OnlineUserData" path="ua.divas.bean.OnlineUserData"/>

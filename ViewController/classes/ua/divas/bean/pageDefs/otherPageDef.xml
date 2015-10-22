@@ -5,6 +5,12 @@
   <executables>
     <variableIterator id="variables">
       <variable Name="ZatrName" Type="java.lang.String"/>
+      <variable Type="void" Name="createKontrag_return" IsQueriable="false" IsUpdateable="0"
+                DefaultValue="${bindings.createKontrag.result}"/>
+      <variable Type="java.lang.String" Name="createKontrag_p_name" IsQueriable="false"/>
+      <variable Type="int" Name="createKontrag_isSupp" IsQueriable="false"/>
+      <variable Type="int" Name="createKontrag_isMeasr" IsQueriable="false"/>
+      <variable Type="int" Name="createKontrag_isByer" IsQueriable="false"/>
     </variableIterator>
     <iterator Binds="OtherZatratyView1" RangeSize="25" DataControl="AppModuleDataControl"
               id="OtherZatratyView1Iterator"/>
@@ -100,5 +106,39 @@
                   ReturnName="data.AppModuleDataControl.methodResults.getOperationName_AppModuleDataControl_OtherZatratyView1_getOperationName_result">
       <NamedData NDName="Id" NDValue="#{bindings.OparationId.inputValue}" NDType="java.lang.String"/>
     </methodAction>
+    <attributeValues IterBinding="OtherZatratyView1Iterator" id="KontragId1">
+      <AttrNames>
+        <Item Value="KontragId"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="createKontrag" RequiresUpdateModel="true" Action="invokeMethod" MethodName="createKontrag"
+                  IsViewObjectMethod="true" DataControl="AppModuleDataControl"
+                  InstanceName="data.AppModuleDataControl.KontragentsView1"
+                  ReturnName="data.AppModuleDataControl.methodResults.createKontrag_AppModuleDataControl_KontragentsView1_createKontrag_result">
+      <NamedData NDName="p_name" NDType="java.lang.String" NDValue="${bindings.createKontrag_p_name}"/>
+      <NamedData NDName="isSupp" NDType="int" NDValue="${bindings.createKontrag_isSupp}"/>
+      <NamedData NDName="isMeasr" NDType="int" NDValue="${bindings.createKontrag_isMeasr}"/>
+      <NamedData NDName="isByer" NDType="int" NDValue="${bindings.createKontrag_isByer}"/>
+    </methodAction>
+    <attributeValues IterBinding="variables" id="p_name">
+      <AttrNames>
+        <Item Value="createKontrag_p_name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="isSupp">
+      <AttrNames>
+        <Item Value="createKontrag_isSupp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="isMeasr">
+      <AttrNames>
+        <Item Value="createKontrag_isMeasr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="isByer">
+      <AttrNames>
+        <Item Value="createKontrag_isByer"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

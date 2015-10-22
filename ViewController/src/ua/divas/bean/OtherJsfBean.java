@@ -1,5 +1,7 @@
 package ua.divas.bean;
 
+import java.util.Map;
+
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
@@ -14,6 +16,7 @@ import oracle.adf.model.BindingContext;
 import oracle.adf.model.binding.DCBindingContainer;
 import oracle.adf.model.binding.DCDataControl;
 import oracle.adf.model.binding.DCIteratorBinding;
+import oracle.adf.share.ADFContext;
 import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.input.RichInputListOfValues;
 import oracle.adf.view.rich.component.rich.input.RichInputText;
@@ -28,6 +31,7 @@ import oracle.binding.OperationBinding;
 
 import oracle.jbo.Row;
 
+import org.apache.myfaces.trinidad.event.ReturnEvent;
 import org.apache.myfaces.trinidad.render.ExtendedRenderKitService;
 import org.apache.myfaces.trinidad.util.Service;
 
@@ -38,19 +42,21 @@ public class OtherJsfBean {
     private RichPopup zatrPopup;
     private boolean visibleKontrag;
     private boolean visibleKassa;
+    private RichPopup kontrPopup;
+    private RichInputText kontrName;
 
     public OtherJsfBean() {
     }
-    
+
     public void setVisibleKontrag(boolean visibleKontrag) {
         this.visibleKontrag = visibleKontrag;
     }
-    
-    private OperationBinding getOperation(){
+
+    private OperationBinding getOperation() {
         BindingContainer binding = BindingContext.getCurrent().getCurrentBindingsEntry();
         return binding.getOperationBinding("getOperationName");
     }
-    
+
     public boolean getVisibleKontrag() {
         OperationBinding ob = getOperation();
         if (ob != null) {
@@ -59,7 +65,7 @@ public class OtherJsfBean {
             System.out.println(opName);
             if (!opName.equalsIgnoreCase("FROM_KASSA")) {
                 //if (!opName.equalsIgnoreCase("MOVE_KASSA")) {
-                    return true;
+                return true;
                 //}
             }
         }
@@ -84,7 +90,7 @@ public class OtherJsfBean {
         //return visibleKassa;
         return false;
     }
-    
+
     public void resetBindingValue(String expression, Object newValue) {
         FacesContext ctx = FacesContext.getCurrentInstance();
         Application app = ctx.getApplication();
@@ -102,7 +108,7 @@ public class OtherJsfBean {
     public RichInputText getZatrName() {
         return zatrName;
     }
-    
+
     private void setFullName() {
         DCBindingContainer bd = (DCBindingContainer) BindingContext.getCurrent().getCurrentBindingsEntry();
         DCIteratorBinding it = bd.findIteratorBinding("ZatratyView1Iterator");
@@ -110,7 +116,7 @@ public class OtherJsfBean {
 
         currRow.setAttribute("Fullname", getZatrName().getValue().toString());
     }
-    
+
     protected void refreshZatr() {
         BindingContext bindingContext = BindingContext.getCurrent();
         DCDataControl dc =
@@ -118,9 +124,9 @@ public class OtherJsfBean {
         AppModuleImpl am = (AppModuleImpl) dc.getDataProvider();
         am.getZatratyView1().executeQuery();
     }
-    
+
     public void onPopupCreateZatraty(PopupFetchEvent popupFetchEvent) {
-        resetBindingValue("#{bindings.ZatrName1.inputValue}",null);
+        resetBindingValue("#{bindings.ZatrName1.inputValue}", null);
         try {
             getZatrName().resetValue();
         } catch (Exception e) {
@@ -128,7 +134,7 @@ public class OtherJsfBean {
             e.printStackTrace();
         }
     }
-    
+
     public void onNewZatratyDialogListener(DialogEvent dialogEvent) {
         if (dialogEvent.getOutcome().name().equals("ok")) {
             BindingContainer binding = BindingContext.getCurrent().getCurrentBindingsEntry();
@@ -139,7 +145,7 @@ public class OtherJsfBean {
             }
         }
     }
-    
+
     public void hidePopup(RichPopup popup) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExtendedRenderKitService service = Service.getRenderKitService(facesContext, ExtendedRenderKitService.class);
@@ -154,7 +160,7 @@ public class OtherJsfBean {
     public RichPopup getZatrPopup() {
         return zatrPopup;
     }
-    
+
     public void onSaveZatraty(ActionEvent actionEvent) {
         if (actionEvent.getComponent().getId().equals("bNewZatraty")) {
             try {
@@ -175,11 +181,39 @@ public class OtherJsfBean {
             }
         }
     }
-    
+
     public void onCancelZatrat(ActionEvent actionEvent) {
         hidePopup(getZatrPopup());
     }
     
+    public void onSaveKontrag(ActionEvent actionEvent) {
+        if (actionEvent.getComponent().getId().equals("bNewKontrag")) {
+            try {
+                getKontrName().getValue().toString();
+                BindingContainer binding = BindingContext.getCurrent().getCurrentBindingsEntry();
+                OperationBinding ob = binding.getOperationBinding("createKontrag");
+                if (ob != null) {
+                    ob.getParamsMap().put("p_name", getKontrName().getValue().toString());
+                    ob.getParamsMap().put("isSupp", 0);
+                    ob.getParamsMap().put("isMeasr", 0);
+                    ob.getParamsMap().put("isByer", 0);
+                    ob.execute();
+                }
+                hidePopup(getKontrPopup());
+            } catch (Exception e) {
+                FacesMessage msg =
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка валидации",
+                                     "Имя контрагента не может быть пустым!");
+                FacesContext ctx = FacesContext.getCurrentInstance();
+                ctx.addMessage(null, msg);
+            }
+        }
+    }
+
+    public void onCancelKontrag(ActionEvent actionEvent) {
+        hidePopup(getKontrPopup());
+    }
+
     public void onLaunchLov(LaunchPopupEvent launchPopupEvent) {
         String submittedValue = (String) launchPopupEvent.getSubmittedValue();
         //only perform query if value is submitted
@@ -200,5 +234,45 @@ public class OtherJsfBean {
             }
         }
         //applyBuyerCriteria();
+    }
+
+    public void onReturnKontrag(ReturnEvent returnEvent) {
+        ADFContext adfCtx = ADFContext.getCurrent();
+        Map pageFlowScope = adfCtx.getPageFlowScope();
+        Object val = pageFlowScope.get("KontragId");
+        
+        resetBindingValue("#{bindings.KontragId1.inputValue}", val);
+
+    }
+
+    public void onPopupCreateKontr(PopupFetchEvent popupFetchEvent) {
+        
+        resetBindingValue("#{bindings.p_name.inputValue}", null);
+        try {
+            getKontrName().resetValue();
+        } catch (Exception e) {
+            // TODO: Add catch code
+            e.printStackTrace();
+        }
+    }
+
+    public void onNewKontragDialog(DialogEvent dialogEvent) {
+        // Add event code here...
+    }
+
+    public void setKontrPopup(RichPopup kontrPopup) {
+        this.kontrPopup = kontrPopup;
+    }
+
+    public RichPopup getKontrPopup() {
+        return kontrPopup;
+    }
+
+    public void setKontrName(RichInputText kontrName) {
+        this.kontrName = kontrName;
+    }
+
+    public RichInputText getKontrName() {
+        return kontrName;
     }
 }

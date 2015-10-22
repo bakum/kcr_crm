@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="KontragentsView"
-  Version="12.1.2.66.68"
+  Version="12.1.3.10.8"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
@@ -39,7 +39,8 @@
     Name="u_name"
     Kind="where"
     Type="java.lang.String">
-    <TransientExpression><![CDATA[viewObject.getSessionUser()]]></TransientExpression>
+    <TransientExpression
+      Name="expression"><![CDATA[viewObject.getSessionUser()]]></TransientExpression>
     <Properties>
       <SchemaBasedProperties>
         <DISPLAYHINT
@@ -320,8 +321,8 @@ order by Kontragents.FULLNAME]]></SQLQuery>
     AliasName="VIEW_ATTR"
     SQLType="NUMERIC"
     IsQueriable="false">
-    <RecalcCondition><![CDATA[true]]></RecalcCondition>
     <TransientExpression><![CDATA[OrdersView.sum("TotalSumUslugi != null ? TotalSumUslugi : 0")]]></TransientExpression>
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
   </ViewAttribute>
   <ViewAttribute
     Name="TotalOplat"
@@ -334,8 +335,8 @@ order by Kontragents.FULLNAME]]></SQLQuery>
     AliasName="VIEW_ATTR"
     SQLType="NUMERIC"
     IsQueriable="false">
-    <RecalcCondition><![CDATA[true]]></RecalcCondition>
     <TransientExpression><![CDATA[OrdersView.sum("TotalSumOplaty != null ? TotalSumOplaty : 0")]]></TransientExpression>
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
   </ViewAttribute>
   <ViewAttribute
     Name="DebtBuyer"
@@ -348,8 +349,8 @@ order by Kontragents.FULLNAME]]></SQLQuery>
     AliasName="VIEW_ATTR"
     SQLType="NUMERIC"
     IsQueriable="false">
-    <RecalcCondition><![CDATA[true]]></RecalcCondition>
     <TransientExpression><![CDATA[VwBuyerMoves.sum("SumSumm != null ? SumSumm : 0")]]></TransientExpression>
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
   </ViewAttribute>
   <ViewAttribute
     Name="CountContacts"
@@ -362,8 +363,8 @@ order by Kontragents.FULLNAME]]></SQLQuery>
     AliasName="VIEW_ATTR"
     SQLType="NUMERIC"
     IsQueriable="false">
-    <RecalcCondition><![CDATA[true]]></RecalcCondition>
     <TransientExpression><![CDATA[ContactDetailsView.count("Id != null ? Id : 0")]]></TransientExpression>
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
   </ViewAttribute>
   <ViewCriteria
     Name="KontragentsGroup"
@@ -401,7 +402,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
           Operator="="
           Conjunction="AND"
           Value="1"
-          GenerateIsNullClauseForBindVars="false"
           Required="Optional"/>
       </ViewCriteriaRow>
     </ViewCriteria>
@@ -442,7 +442,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
           Operator="="
           Conjunction="AND"
           Value="0"
-          GenerateIsNullClauseForBindVars="false"
           Required="Optional"/>
         <ViewCriteriaItem
           Name="Fullname"
@@ -450,7 +449,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
           Operator="STARTSWITH"
           Conjunction="AND"
           Value=":KonName"
-          GenerateIsNullClauseForBindVars="false"
           IsBindVarValue="true"
           Required="Optional"/>
         <ViewCriteriaItem
@@ -459,7 +457,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
           Operator="="
           Conjunction="AND"
           Value="1"
-          GenerateIsNullClauseForBindVars="false"
           Required="Optional"/>
       </ViewCriteriaRow>
     </ViewCriteria>
@@ -496,7 +493,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="="
         Conjunction="AND"
         Value="Покупатели"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional"/>
     </ViewCriteriaRow>
   </ViewCriteria>
@@ -532,7 +528,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="="
         Conjunction="AND"
         Value=":KonId"
-        GenerateIsNullClauseForBindVars="false"
         IsBindVarValue="true"
         Required="Optional"/>
     </ViewCriteriaRow>
@@ -569,7 +564,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="="
         Conjunction="AND"
         Value="0"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional"/>
       <ViewCriteriaItem
         Name="Fullname"
@@ -577,7 +571,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="STARTSWITH"
         Conjunction="AND"
         Value=":KonName"
-        GenerateIsNullClauseForBindVars="false"
         IsBindVarValue="true"
         Required="Optional"/>
       <ViewCriteriaItem
@@ -586,7 +579,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="="
         Conjunction="AND"
         Value="0"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional"/>
       <ViewCriteriaItem
         Name="IsBuyer"
@@ -594,7 +586,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="="
         Conjunction="AND"
         Value="1"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional"/>
     </ViewCriteriaRow>
   </ViewCriteria>
@@ -630,7 +621,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="="
         Conjunction="AND"
         Value="0"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional"/>
       <ViewCriteriaItem
         Name="Fullname"
@@ -638,7 +628,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="STARTSWITH"
         Conjunction="AND"
         Value=":ZamerName"
-        GenerateIsNullClauseForBindVars="false"
         IsBindVarValue="true"
         Required="Optional"/>
       <ViewCriteriaItem
@@ -647,7 +636,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="="
         Conjunction="AND"
         Value="0"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional"/>
       <ViewCriteriaItem
         Name="IsMeasurer"
@@ -655,7 +643,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="="
         Conjunction="AND"
         Value="1"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional"/>
     </ViewCriteriaRow>
   </ViewCriteria>
@@ -691,7 +678,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="="
         Conjunction="AND"
         Value="0"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional"/>
       <ViewCriteriaItem
         Name="Fullname"
@@ -699,7 +685,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="STARTSWITH"
         Conjunction="AND"
         Value=":SuppId"
-        GenerateIsNullClauseForBindVars="false"
         IsBindVarValue="true"
         Required="Optional"/>
       <ViewCriteriaItem
@@ -708,7 +693,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="="
         Conjunction="AND"
         Value="0"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional"/>
       <ViewCriteriaItem
         Name="IsSupplier"
@@ -716,7 +700,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="="
         Conjunction="AND"
         Value="1"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional"/>
     </ViewCriteriaRow>
   </ViewCriteria>
@@ -752,7 +735,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="="
         Conjunction="AND"
         Value="0"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional"/>
       <ViewCriteriaItem
         Name="Fullname"
@@ -760,7 +742,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="STARTSWITH"
         Conjunction="AND"
         Value=":KonName"
-        GenerateIsNullClauseForBindVars="false"
         IsBindVarValue="true"
         Required="Optional"/>
       <ViewCriteriaItem
@@ -769,7 +750,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="="
         Conjunction="AND"
         Value="0"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional"/>
     </ViewCriteriaRow>
   </ViewCriteria>
@@ -805,7 +785,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="="
         Conjunction="AND"
         Value="0"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional"/>
       <ViewCriteriaItem
         Name="Fullname"
@@ -813,7 +792,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="STARTSWITH"
         Conjunction="AND"
         Value=":OtherName"
-        GenerateIsNullClauseForBindVars="false"
         IsBindVarValue="true"
         Required="Optional"/>
       <ViewCriteriaItem
@@ -822,7 +800,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="="
         Conjunction="AND"
         Value="0"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional"/>
       <ViewCriteriaItem
         Name="IsSupplier"
@@ -830,7 +807,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="="
         Conjunction="AND"
         Value="0"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional"/>
       <ViewCriteriaItem
         Name="IsBuyer"
@@ -838,7 +814,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="="
         Conjunction="AND"
         Value="0"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional"/>
       <ViewCriteriaItem
         Name="IsMeasurer"
@@ -846,7 +821,6 @@ order by Kontragents.FULLNAME]]></SQLQuery>
         Operator="="
         Conjunction="AND"
         Value="0"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional"/>
     </ViewCriteriaRow>
   </ViewCriteria>
@@ -1301,6 +1275,25 @@ order by Kontragents.FULLNAME]]></SQLQuery>
       <Return
         Name="_return_type_"
         Type="void"/>
+      <Parameter
+        Name="p_name"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="isSupp"
+        Type="int"/>
+      <Parameter
+        Name="isMeasr"
+        Type="int"/>
+      <Parameter
+        Name="isByer"
+        Type="int"/>
+    </Method>
+    <Method
+      Name="createKontr"
+      MethodName="createKontr">
+      <Return
+        Name="_return_type_"
+        Type="java.lang.String"/>
       <Parameter
         Name="p_name"
         Type="java.lang.String"/>

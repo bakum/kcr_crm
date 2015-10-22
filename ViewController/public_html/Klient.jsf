@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="Новый контрагент" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:panelGridLayout id="pgl1">
+                <af:gridRow height="100%" id="gr1">
+                    <af:gridCell width="100%" halign="stretch" valign="stretch" id="gc1">
+                        <!-- Content -->
+                        <af:panelBox text="Новый контрагент" id="pb1" showDisclosure="false">
+                            <f:facet name="toolbar"/>
+                            <af:panelFormLayout id="pfl1">
+                                <af:inputText value="#{bindings.p_name.inputValue}"
+                                              label="Наименование"
+                                              columns="#{bindings.p_name.hints.displayWidth}"
+                                              maximumLength="#{bindings.p_name.hints.precision}"
+                                              shortDesc="#{bindings.p_name.hints.tooltip}" id="it1" required="true">
+                                    <f:validator binding="#{bindings.p_name.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.isSupp.inputValue}"
+                                              label="#{bindings.isSupp.hints.label}"
+                                              required="#{bindings.isSupp.hints.mandatory}"
+                                              columns="#{bindings.isSupp.hints.displayWidth}"
+                                              maximumLength="#{bindings.isSupp.hints.precision}"
+                                              shortDesc="#{bindings.isSupp.hints.tooltip}" id="it2" visible="false">
+                                    <f:validator binding="#{bindings.isSupp.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.isMeasr.inputValue}"
+                                              label="#{bindings.isMeasr.hints.label}"
+                                              required="#{bindings.isMeasr.hints.mandatory}"
+                                              columns="#{bindings.isMeasr.hints.displayWidth}"
+                                              maximumLength="#{bindings.isMeasr.hints.precision}"
+                                              shortDesc="#{bindings.isMeasr.hints.tooltip}" id="it3" visible="false">
+                                    <f:validator binding="#{bindings.isMeasr.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.isByer.inputValue}"
+                                              label="#{bindings.isByer.hints.label}"
+                                              required="#{bindings.isByer.hints.mandatory}"
+                                              columns="#{bindings.isByer.hints.displayWidth}"
+                                              maximumLength="#{bindings.isByer.hints.precision}"
+                                              shortDesc="#{bindings.isByer.hints.tooltip}" id="it4" visible="false">
+                                    <f:validator binding="#{bindings.isByer.validator}"/>
+                                </af:inputText>
+                                <af:panelGroupLayout id="pgl2" layout="horizontal" halign="right">
+                                    <af:toolbar id="t1">
+                                        <af:button actionListener="#{klient.onExecute}" text="Ok"
+                                                   disabled="#{!bindings.createKontr.enabled}" id="b1" action="ok"/>
+                                        <af:button text="Отмена" id="b2" action="cancel"/>
+                                    </af:toolbar>
+                                </af:panelGroupLayout>
+                            </af:panelFormLayout>
+                        </af:panelBox>
+                    </af:gridCell>
+                </af:gridRow>
+            </af:panelGridLayout>
+        </af:form>
+    </af:document>
+</f:view>

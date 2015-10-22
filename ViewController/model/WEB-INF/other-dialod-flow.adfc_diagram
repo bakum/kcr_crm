@@ -69,4 +69,33 @@
       <property
          name="sdm:polyPoints">B50,170.0,183.0625,299.0,245.0625,L50</property>
    </ControlFlowCase>
+   <TaskFlowCall
+      id="TaskFlowCall7">
+      <property
+         name="taskFlowId">newKontrag</property>
+      <property
+         name="activityId">newKontrag</property>
+      <property
+         name="documentReference">/WEB-INF/newKontrag.xml</property>
+      <property
+         name="runAsDialog">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>newKontrag&lt;/b>&lt;/p>&lt;p>Activity Type:  Task Flow Call&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">330.89648</property>
+      <property
+         name="x">161.0</property>
+   </TaskFlowCall>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase8"
+      from="View2"
+      to="TaskFlowCall7">
+      <property
+         name="fromOutcome">newKontrag</property>
+      <property
+         name="sdm:polyPoints">B44,166.5,182.69629,161.0,276.5459,T50</property>
+   </ControlFlowCase>
 </SDM>
