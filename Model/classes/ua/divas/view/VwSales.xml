@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="VwSales"
-  Version="12.1.2.66.68"
+  Version="12.1.3.10.8"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
@@ -24,7 +24,8 @@
     Name="u_name"
     Kind="where"
     Type="java.lang.String">
-    <TransientExpression><![CDATA[viewObject.getSessionUser()]]></TransientExpression>
+    <TransientExpression
+      Name="expression"><![CDATA[viewObject.getSessionUser()]]></TransientExpression>
     <Properties>
       <SchemaBasedProperties>
         <DISPLAYHINT
@@ -36,13 +37,23 @@
     Name="s_dat"
     Kind="viewcriteria"
     Type="java.sql.Timestamp">
-    <TransientExpression><![CDATA[adf.currentDate]]></TransientExpression>
+    <TransientExpression
+      Name="expression"><![CDATA[adf.currentDate]]></TransientExpression>
   </Variable>
   <Variable
     Name="f_dat"
     Kind="viewcriteria"
     Type="java.sql.Timestamp">
-    <TransientExpression><![CDATA[viewObject.getDateLast()]]></TransientExpression>
+    <TransientExpression
+      Name="expression"><![CDATA[viewObject.getDateLast()]]></TransientExpression>
+  </Variable>
+  <Variable
+    Name="u_status"
+    Kind="viewcriteria"
+    Type="java.lang.String">
+    <TransientExpression
+      trustMode="untrusted"
+      Name="expression"><![CDATA[viewObject.getCompleteStatus()]]></TransientExpression>
   </Variable>
   <ViewAccessor
     Name="OrdersView1"
@@ -345,8 +356,8 @@ where
     AliasName="VIEW_ATTR"
     SQLType="NUMERIC"
     IsQueriable="false">
-    <RecalcCondition><![CDATA[true]]></RecalcCondition>
     <TransientExpression><![CDATA[((PlanSebestSumma == null ? 0 : PlanSebestSumma)-(FactSebestSumma == null ? 0 : FactSebestSumma))]]></TransientExpression>
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
     <Dependencies>
       <Item
         Value="FactSebestSumma"/>
@@ -372,8 +383,8 @@ where
     ColumnType="NUMBER"
     AliasName="VIEW_ATTR"
     SQLType="NUMERIC">
-    <RecalcCondition><![CDATA[true]]></RecalcCondition>
     <TransientExpression><![CDATA[((SalesSumma == null ? 0 : SalesSumma)-(FactSebestSumma == null ? 0 : FactSebestSumma))]]></TransientExpression>
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
     <Dependencies>
       <Item
         Value="FactSebestSumma"/>
@@ -403,8 +414,8 @@ where
     ColumnType="NUMBER"
     AliasName="VIEW_ATTR"
     SQLType="NUMERIC">
-    <RecalcCondition><![CDATA[true]]></RecalcCondition>
     <TransientExpression><![CDATA[(FactSebestSumma == null ? 100 : (MargaAbs*100/FactSebestSumma))]]></TransientExpression>
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -456,7 +467,6 @@ where
         ViewAttribute="Period"
         Operator="BETWEEN"
         Conjunction="AND"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional">
         <ViewCriteriaItemValue
           Name="VwSalesCriteriaDate_VwSalesCriteria_row_0_Period_vcval0"
@@ -503,7 +513,6 @@ where
         ViewAttribute="Period"
         Operator="BETWEEN"
         Conjunction="AND"
-        GenerateIsNullClauseForBindVars="false"
         Required="Optional">
         <ViewCriteriaItemValue
           Name="VwSalesCriteriaComplete_VwSalesCriteria_row_0_Period_vcval0"
@@ -517,10 +526,11 @@ where
       <ViewCriteriaItem
         Name="StatusId"
         ViewAttribute="StatusId"
-        Operator="ISNOTBLANK"
+        Operator="="
         Conjunction="AND"
-        GenerateIsNullClauseForBindVars="false"
-        Required="Optional"/>
+        Required="Optional"
+        Value=":u_status"
+        IsBindVarValue="true"/>
     </ViewCriteriaRow>
   </ViewCriteria>
   <AttrArray Name="KeyAttributes">

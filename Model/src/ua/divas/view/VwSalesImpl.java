@@ -8,8 +8,11 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import oracle.jbo.Row;
 import oracle.jbo.domain.Date;
 import oracle.jbo.server.ViewObjectImpl;
+
+import oracle.jbo.server.ViewRowSetImpl;
 
 import org.codehaus.groovy.runtime.InvokerHelper;
 
@@ -27,6 +30,19 @@ public class VwSalesImpl extends DivasView {
     public VwSalesImpl() {
     }
     
+    public String getCompleteStatus() {
+        ViewObjectImpl vo = (ViewObjectImpl) this.getRootApplicationModule().findViewObject("OrderStatusView1");
+        ViewRowSetImpl rs =
+            (ViewRowSetImpl) vo
+            .findByViewCriteria(vo.getViewCriteria("FilterOrderStatusComplete"), -1, vo.QUERY_MODE_SCAN_DATABASE_TABLES);
+        Row row = rs.first();
+        if (row != null) {
+            String rv = (String) row.getAttribute("Id");
+            return rv;
+        }
+        return null;
+    }
+    
     public java.sql.Timestamp getDateLast1() throws SQLException {
         Calendar calendar = Calendar.getInstance();
         //calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH)); // это будет начало месяца
@@ -42,10 +58,10 @@ public class VwSalesImpl extends DivasView {
     
     public Date getDateLast() throws SQLException {
         Calendar calendar = Calendar.getInstance();
-        //calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH)); // это будет начало месяца
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH)); // это будет начало месяца
         //calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH)); // это будет конец месяца
         //calendar.set(Calendar.DAY_OF_YEAR, calendar.getActualMaximum(Calendar.DAY_OF_YEAR)); // это будет конец года
-        calendar.set(Calendar.DAY_OF_YEAR, calendar.getActualMinimum(Calendar.DAY_OF_YEAR)); // это будет начало года
+        //calendar.set(Calendar.DAY_OF_YEAR, calendar.getActualMinimum(Calendar.DAY_OF_YEAR)); // это будет начало года
         java.util.Date pDate = calendar.getTime();
         oracle.jbo.domain.Date dbDate= new oracle.jbo.domain.Date(new java.sql.Date(pDate.getTime()));
         //oracle.jbo.domain.Date time = new oracle.jbo.domain.Date(pDate);
@@ -99,6 +115,22 @@ public class VwSalesImpl extends DivasView {
      */
     public void setf_dat(Timestamp value) {
         ensureVariableManager().setVariableValue("f_dat", value);
+    }
+
+    /**
+     * Returns the variable value for u_status.
+     * @return variable value for u_status
+     */
+    public String getu_status() {
+        return (String) ensureVariableManager().getVariableValue("u_status");
+    }
+
+    /**
+     * Sets <code>value</code> for variable u_status.
+     * @param value value to bind as u_status
+     */
+    public void setu_status(String value) {
+        ensureVariableManager().setVariableValue("u_status", value);
     }
 
 
