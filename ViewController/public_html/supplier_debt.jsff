@@ -107,7 +107,8 @@
                                                             styleClass="RedClass">
                                                     <af:menu text="#{node.DebtSupplier}" id="m1" icon="/img/coins.png"
                                                              styleClass="RedClass">
-                                                        <af:commandMenuItem text="Перенос задолженности" id="cmi2"/>
+                                                        <af:commandMenuItem text="Перенос задолженности" id="cmi2"
+                                                                            rendered="false"/>
                                                         <af:commandMenuItem text="Оформить РКО" id="cmi1">
                                                             <af:showPopupBehavior popupId="::p2"/>
                                                         </af:commandMenuItem>
