@@ -496,7 +496,8 @@ upper(OtherZatraty.USER_ID) in (select upper(N) from table(cast(get_users(:u_nam
         EntityAttrName="KontragId"
         EntityUsage="OtherZatraty"
         AliasName="KONTRAG_ID"
-        LOVName="LOV_KontragId">
+        LOVName="LOV_KontragId"
+        IsQueriable="false">
         <Properties>
             <SchemaBasedProperties>
                 <CONTROLTYPE
