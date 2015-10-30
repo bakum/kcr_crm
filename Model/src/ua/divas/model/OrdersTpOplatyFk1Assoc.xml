@@ -4,7 +4,7 @@
 <Association
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="OrdersTpOplatyFk1Assoc"
-  Version="12.1.2.66.68"
+  Version="12.1.3.10.8"
   InheritPersonalization="merge">
   <DesignTime>
     <Attr Name="_isCodegen" Value="true"/>
@@ -13,7 +13,8 @@
     Name="Orders"
     Cardinality="1"
     Source="true"
-    Owner="ua.divas.model.Orders">
+    Owner="ua.divas.model.Orders"
+    LockLevel="NONE">
     <DesignTime>
       <Attr Name="_aggregation" Value="0"/>
       <Attr Name="_finderName" Value="Orders"/>
