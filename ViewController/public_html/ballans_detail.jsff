@@ -36,6 +36,11 @@
                                             </af:button>
                                             <af:spacer width="10" height="10" id="s1"/>
                                             <af:button text="Обновить" id="b2" actionListener="#{ballans.onRefresh}"/>
+                                            <af:group id="g1">
+                                                <af:button actionListener="#{bindings.saveBallansAsXML.execute}"
+                                                           text="Сохранить как XML"
+                                                           disabled="#{!bindings.saveBallansAsXML.enabled}" id="b5"/>
+                                            </af:group>
                                         </af:panelGroupLayout>
                                     </f:facet>
                                     <af:treeTable value="#{bindings.VwBallansAp1.treeModel}" var="node"

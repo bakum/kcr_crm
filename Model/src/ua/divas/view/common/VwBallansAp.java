@@ -8,5 +8,7 @@ import oracle.jbo.domain.Date;
 // ---------------------------------------------------------------------
 public interface VwBallansAp extends ViewObject {
     void refreshBallans(Date f_dat, Date l_dat);
+
+    void saveBallansAsXML();
 }
 

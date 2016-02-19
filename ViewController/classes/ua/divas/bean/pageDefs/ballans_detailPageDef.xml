@@ -133,5 +133,9 @@
         <Item Value="Id"/>
       </AttrNames>
     </attributeValues>
+    <methodAction id="saveBallansAsXML" RequiresUpdateModel="true" Action="invokeMethod" MethodName="saveBallansAsXML"
+                  IsViewObjectMethod="true" DataControl="AppModuleDataControl"
+                  InstanceName="data.AppModuleDataControl.VwBallansAp1"
+                  ReturnName="data.AppModuleDataControl.methodResults.saveBallansAsXML_AppModuleDataControl_VwBallansAp1_saveBallansAsXML_result"/>
   </bindings>
 </pageDefinition>

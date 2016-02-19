@@ -34,6 +34,10 @@ public class VwBallansApImpl extends DivasView implements VwBallansAp {
         callStoredProcedure("report_pkg.refresh_ballans(?,?)", new Object[] {f_dat, l_dat});
     }
     
+    public void saveBallansAsXML() {
+        callStoredProcedure("UTILITY.save_ballans_as_xml()", new Object[] {});
+    }
+    
     public Date getDateLast() throws SQLException {
         Calendar calendar = Calendar.getInstance();
         //calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH)); // это будет начало месяца

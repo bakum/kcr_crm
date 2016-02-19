@@ -24,5 +24,10 @@ public class VwBallansApClient extends ViewUsageImpl implements VwBallansAp {
         }, new Object[] { f_dat, l_dat });
         return;
     }
+
+    public void saveBallansAsXML() {
+        Object _ret = getApplicationModuleProxy().riInvokeExportedMethod(this, "saveBallansAsXML", null, null);
+        return;
+    }
 }
 
